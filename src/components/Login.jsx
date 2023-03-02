@@ -5,7 +5,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [disabled, setDisabled] = useState(true);
-  let history = useHistory();
+  const history = useHistory();
 
   const validation = () => {
     const number = 6;
@@ -18,12 +18,12 @@ function Login() {
 
   useEffect(() => {
     validation();
-  },[email, password])
+  }, [email, password]);
 
   const handleSubmit = () => {
-    localStorage.setItem('user', JSON.stringify({'email': email}));
-    history.push('/meals')
-  }
+    localStorage.setItem('user', JSON.stringify({ email }));
+    history.push('/meals');
+  };
 
   return (
     <div>
@@ -34,7 +34,7 @@ function Login() {
           data-testid="email-input"
           placeholder="email"
           value={ email }
-          onChange={ ({target: {value}}) => setEmail(value) }
+          onChange={ ({ target: { value } }) => setEmail(value) }
         />
         <input
           type="password"
@@ -42,7 +42,7 @@ function Login() {
           data-testid="password-input"
           placeholder="senha"
           value={ password }
-          onChange={ ({target: {value}}) => setPassword(value) }
+          onChange={ ({ target: { value } }) => setPassword(value) }
         />
 
         <button
