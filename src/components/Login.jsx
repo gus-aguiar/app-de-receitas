@@ -1,29 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [disabled, setDisabled] = useState(true);
+  let history = useHistory();
 
   const validation = () => {
     const number = 6;
     const emailRegex = (/\S+@\S+\.\S+/);
-    const pass = password.length > number;
-    const e = emailRegex.test(email);
-    setDisabled(!pass);
-    console.log(e);
+    const pass = password.length > number && emailRegex.test(email);
+    console.log(password);
     console.log(email);
+    setDisabled(!pass);
   };
-  const renderInput = ({ target }) => {
+
+  useEffect(() => {
     validation();
-    const { name, value } = target;
-    if (name === 'mailInput') {
-      setEmail(value);
-    } if (name === 'passwordInput') {
-      setPassword(value);
-    }
-    setPassword(target.value);
-  };
+  },[email, password])
+
+  const handleSubmit = () => {
+    localStorage.setItem('user', JSON.stringify({'email': email}));
+    history.push('/meals')
+  }
 
   return (
     <div>
@@ -33,20 +33,23 @@ function Login() {
           name="mailInput"
           data-testid="email-input"
           placeholder="email"
-          onChange={ renderInput }
+          value={ email }
+          onChange={ ({target: {value}}) => setEmail(value) }
         />
         <input
           type="password"
           name="passwordInput"
           data-testid="password-input"
           placeholder="senha"
-          onChange={ renderInput }
+          value={ password }
+          onChange={ ({target: {value}}) => setPassword(value) }
         />
 
         <button
           type="submit"
           data-testid="login-submit-btn"
           disabled={ disabled }
+          onClick={ handleSubmit }
         >
           Entrar
         </button>
