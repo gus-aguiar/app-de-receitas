@@ -9,8 +9,12 @@ function Profile() {
   }, []);
 
   const history = useHistory();
-  const handleClick = () => {
+  const handleClickDone = () => {
     history.push('/done-recipes');
+  };
+
+  const handleClickFavorite = () => {
+    history.push('/favorite-recipes');
   };
 
   return (
@@ -18,11 +22,16 @@ function Profile() {
       <h2 data-testid="profile-email">{email}</h2>
       <button
         data-testid="profile-done-btn"
-        onClick={ handleClick }
+        onClick={ handleClickDone }
       >
         Done Recipes
       </button>
-      <button data-testid="profile-favorite-btn">Favorite Recipes</button>
+      <button
+        data-testid="profile-favorite-btn"
+        onClick={ handleClickFavorite }
+      >
+        Favorite Recipes
+      </button>
       <button data-testid="profile-logout-btn">Logout</button>
     </div>
   );
