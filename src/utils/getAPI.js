@@ -1,37 +1,34 @@
+import {
+  getDrinksIngredients,
+  getDrinksFirstLetter,
+  getDrinksName,
+  getMealsIngredients,
+  getMealsFirstLetter,
+  getMealsName,
+} from '../services/recipesAPI';
+
 export async function toggleAPI(type, search, page) {
-  // type verifica qual input radio foi escolhido e faz a requisição baseado nisso.
+  // um toggle para selecionar o endpoint.
   if (page === 'Drinks') {
     if (type === 'ingredient') {
-      const responseAPI = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${search}`);
-      const responseJSON = await responseAPI.json();
-      return responseJSON;
+      return getDrinksIngredients(search);
     }
     if (type === 'name') {
-      const responseAPI = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${search}`);
-      const responseJSON = await responseAPI.json();
-      return responseJSON;
+      return getDrinksName(search);
     }
     if (type === 'first-letter') {
-      const responseAPI = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${search}`);
-      const responseJSON = await responseAPI.json();
-      return responseJSON;
+      return getDrinksFirstLetter(search);
     }
   }
   if (page === 'Meals') {
     if (type === 'ingredient') {
-      const responseAPI = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${search}`);
-      const responseJSON = await responseAPI.json();
-      return responseJSON;
+      return getMealsIngredients(search);
     }
     if (type === 'name') {
-      const responseAPI = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`);
-      const responseJSON = await responseAPI.json();
-      return responseJSON;
+      return getMealsName(search);
     }
     if (type === 'first-letter') {
-      const responseAPI = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${search}`);
-      const responseJSON = await responseAPI.json();
-      return responseJSON;
+      return getMealsFirstLetter(search);
     }
   }
 }
