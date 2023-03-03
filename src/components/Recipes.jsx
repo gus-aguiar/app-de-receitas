@@ -1,5 +1,3 @@
-// Arquivo: src/pages/Recipes.js
-
 import React, { useState, useEffect } from 'react';
 import
 { getMeals,
@@ -8,6 +6,8 @@ import
   getDrinksCategories,
 } from '../services/recipesAPI';
 import RecipeCard from './RecipeCard';
+
+
 
 function Recipes() {
   const [recipes, setRecipes] = useState([]);
@@ -52,6 +52,7 @@ function Recipes() {
         ))}
       </div>
     </>
+
   );
 }
 

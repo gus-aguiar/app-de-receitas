@@ -8,14 +8,16 @@ import DrinksInProgress from '../components/DrinksInProgress';
 import Profile from '../components/Profile';
 import DoneRecipes from '../components/DoneRecipes';
 import FavoriteRecipes from '../components/FavoriteRecipes';
-import Recipes from '../components/Recipes';
+// import Recipes from '../components/Recipes';
+import Meals from '../components/Meals';
+import Drinks from '../components/Drinks';
 
 function Routes() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
-      <Route path="/meals" component={ Recipes } />
-      <Route path="/drinks" component={ Recipes } />
+      <Route path="/meals" component={ Meals } />
+      <Route path="/drinks" component={ Drinks } />
       <Route path="/meals/:id-da-receita" component={ DetalheMeals } />
       <Route path="/drinks/:id-da-receita" component={ DetalheDrinks } />
       <Route path="/meals/:id-da-receita/in-progress" component={ MealsInProgress } />
