@@ -5,7 +5,7 @@ import context from '../context/myContext';
 function SearchBar({ page }) {
   const { handleSearch } = useContext(context);
   return (
-    <form onSubmit={ handleSearch }>
+    <form>
       <input
         type="text"
         data-testid="search-input"
@@ -40,7 +40,7 @@ function SearchBar({ page }) {
         />
       </label>
       <button
-        type="submit"
+        type="button"
         data-testid="exec-search-btn"
         onClick={ (event) => {
           handleSearch(event, page);

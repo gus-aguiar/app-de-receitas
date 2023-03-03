@@ -12,8 +12,6 @@ function Login() {
     const number = 6;
     const emailRegex = (/\S+@\S+\.\S+/);
     const pass = password.length > number && emailRegex.test(email);
-    console.log(password);
-    console.log(email);
     setDisabled(!pass);
   };
 

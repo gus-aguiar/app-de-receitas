@@ -31,7 +31,6 @@ function Provider({ children }) {
   };
 
   const handleSearch = async (event, page) => {
-    event.preventDefault();
     const { target: { form: { radio, search } } } = event;
     // faz a validação se deve mostra um alerta ou fazer um requisição a API
     if (radio.value === 'first-letter' && search.value.length > 1) {
