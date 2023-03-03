@@ -1,53 +1,61 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import context from '../context/myContext';
+import '../styles/Header.css';
 
 function SearchBar({ page }) {
   const { handleSearch } = useContext(context);
   return (
-    <form>
+    <form
+      className="containerForm"
+    >
       <input
         type="text"
         data-testid="search-input"
         name="search"
+        className="inputSearch"
       />
-
-      <label>
-        Ingredient
-        <input
-          type="radio"
-          name="radio"
-          value="ingredient"
-          data-testid="ingredient-search-radio"
-        />
-      </label>
-      <label>
-        Nome
-        <input
-          type="radio"
-          name="radio"
-          value="name"
-          data-testid="name-search-radio"
-        />
-      </label>
-      <label>
-        First Letter
-        <input
-          type="radio"
-          name="radio"
-          value="first-letter"
-          data-testid="first-letter-search-radio"
-        />
-      </label>
-      <button
-        type="button"
-        data-testid="exec-search-btn"
-        onClick={ (event) => {
-          handleSearch(event, page);
-        } }
-      >
-        buscar
-      </button>
+      <div>
+        <label>
+          <input
+            type="radio"
+            name="radio"
+            value="ingredient"
+            data-testid="ingredient-search-radio"
+          />
+          Ingredient
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="radio"
+            value="name"
+            data-testid="name-search-radio"
+          />
+          Nome
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="radio"
+            value="first-letter"
+            data-testid="first-letter-search-radio"
+          />
+          First Letter
+        </label>
+      </div>
+      <div>
+        <button
+          type="button"
+          data-testid="exec-search-btn"
+          onClick={ (event) => {
+            handleSearch(event, page);
+          } }
+          className="buttonSearch"
+        >
+          buscar
+        </button>
+      </div>
     </form>
   );
 }

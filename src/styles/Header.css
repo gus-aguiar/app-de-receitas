@@ -1,0 +1,66 @@
+.headerComponent {
+  background-color: rgba(105, 110, 209, 0.365);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.274);
+}
+
+.containerIcons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.containerIconAndSearch {
+  display: flex;
+  justify-content: end;
+}
+
+.containerForm {
+  width: 100%;
+  text-align: center;
+}
+
+.containerForm input{
+  margin: 10px;
+}
+
+.inputSearch {
+  width: 90%;
+  height: 25px;
+  margin: 10px;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.274);
+}
+
+.buttonSearch {
+  width: 200px;
+  height: 25px;
+  margin: 10px;
+  background-color: yellow;
+  border: none;
+  border-radius: 6px;
+  box-sizing: 2px 2px 4px rgba(0, 0, 0, 0.274);
+  color: grey;
+}
+
+.buttonSearch:hover {
+  transform: scale(1.09,1.09);
+  background-color: rgb(253, 253, 9);
+}
+
+.iconButtonSearch  {
+  background: transparent;
+  border: none;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.iconImgProfile {
+  margin: 10px;
+  margin-right: 30px;
+}
+
+.headerTitle {
+  text-align: center;
+  padding: 10px;
+}

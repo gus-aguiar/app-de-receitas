@@ -2,6 +2,7 @@
 
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import '../styles/card.css';
 
 function RecipeCard({ recipe, index }) {
   const { strMeal, strDrink, strMealThumb, strDrinkThumb, idMeal, idDrink } = recipe;
@@ -14,6 +15,7 @@ function RecipeCard({ recipe, index }) {
     <Link
       to={ linkToRecipe }
       data-testid={ `${index}-recipe-card` }
+      className="linkRecipeCard"
     >
       <div
         className="recipe-card"

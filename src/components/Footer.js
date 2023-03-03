@@ -6,22 +6,26 @@ import '../styles/Footer.css';
 function Footer() {
   return (
     <footer data-testid="footer" className="footerContener">
-      <div>
-        <a href="/drinks">
-          <img
-            src={ drinkIcon }
-            alt="drinks"
-            data-testid="drinks-bottom-btn"
-          />
-        </a>
-        <a href="/meals">
-          <img
-            src={ mealIcon }
-            alt="meals"
-            data-testid="meals-bottom-btn"
-          />
-        </a>
-      </div>
+      <a
+        href="/drinks"
+        className="iconFoote"
+      >
+        <img
+          src={ drinkIcon }
+          alt="drinks"
+          data-testid="drinks-bottom-btn"
+        />
+      </a>
+      <a
+        href="/meals"
+        className="iconFoote"
+      >
+        <img
+          src={ mealIcon }
+          alt="meals"
+          data-testid="meals-bottom-btn"
+        />
+      </a>
     </footer>
   );
 }
