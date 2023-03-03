@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 function RecipeCard({ recipe, index }) {
-//   console.log(recipe);
   const { strMeal, strDrink, strMealThumb, strDrinkThumb, idMeal, idDrink } = recipe;
   const recipeType = strMeal ? 'meals' : 'drinks';
   const name = strMeal || strDrink;

@@ -11,24 +11,30 @@ export async function toggleAPI(type, search, page) {
   // um toggle para selecionar o endpoint.
   if (page === 'Drinks') {
     if (type === 'ingredient') {
-      return getDrinksIngredients(search);
+      const data = await getDrinksIngredients(search);
+      return data;
     }
     if (type === 'name') {
-      return getDrinksName(search);
+      const data = await getDrinksName(search);
+      return data;
     }
     if (type === 'first-letter') {
-      return getDrinksFirstLetter(search);
+      const data = await getDrinksFirstLetter(search);
+      return data;
     }
   }
   if (page === 'Meals') {
     if (type === 'ingredient') {
-      return getMealsIngredients(search);
+      const data = await getMealsIngredients(search);
+      return data;
     }
     if (type === 'name') {
-      return getMealsName(search);
+      const data = await getMealsName(search);
+      return data;
     }
     if (type === 'first-letter') {
-      return getMealsFirstLetter(search);
+      const data = await getMealsFirstLetter(search);
+      return data;
     }
   }
 }
