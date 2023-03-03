@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import context from '../context/myContext';
 
-function SearchBar() {
+function SearchBar({ page }) {
   const { handleSearch } = useContext(context);
   return (
     <form onSubmit={ handleSearch }>
@@ -41,12 +42,18 @@ function SearchBar() {
       <button
         type="submit"
         data-testid="exec-search-btn"
-        onClick={ handleSearch }
+        onClick={ (event) => {
+          handleSearch(event, page);
+        } }
       >
         buscar
       </button>
     </form>
   );
 }
+
+SearchBar.propTypes = {
+  page: PropTypes.string.isRequired,
+};
 
 export default SearchBar;

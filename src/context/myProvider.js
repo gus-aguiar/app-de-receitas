@@ -6,12 +6,13 @@ import { toggleAPI } from '../utils/getAPI';
 function Provider({ children }) {
   const [ListOfProducts, setListOfProducts] = useState({});
 
-  const handleSearch = async (event) => {
+  const handleSearch = async (event, page) => {
     event.preventDefault();
     const { target: { form: { radio, search } } } = event;
+    // faz a validação se deve mostra um alerta ou fazer um requisição a API
     if (radio.value === 'first-letter' && search.value.length > 1) {
       global.alert('Your search must have only 1 (one) character');
-    } else setListOfProducts(await toggleAPI(radio.value, search.value));
+    } else setListOfProducts(await toggleAPI(radio.value, search.value, page));
   };
 
   const value = useMemo(() => ({
