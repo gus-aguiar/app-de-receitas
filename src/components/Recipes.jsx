@@ -4,6 +4,8 @@ import
   getDrinks,
   getMealsCategories,
   getDrinksCategories,
+  getDrinksFiltered,
+  getMealsFiltered,
 } from '../services/recipesAPI';
 import Header from './Header';
 import RecipeCard from './RecipeCard';
@@ -12,6 +14,7 @@ function Recipes() {
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
   const [pathname, setPathname] = useState('');
+  const [filter, setFilter] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,29 +37,45 @@ function Recipes() {
     fetchData();
   }, []);
 
+  const handlefilter = async (category) => {
+    const data = await (pathname === 'Meals'
+      ? getMealsFiltered(category)
+      : getDrinksFiltered(category));
+    console.log(data);
+    const maxNumber = 12;
+    console.log(data.slice(0, maxNumber));
+    setFilter(data.slice(0, maxNumber));
+  };
+
   return (
-    <>
-      <div className="recipes-container">
-        <Header title={ pathname } />
-        {recipes.map((recipe, index) => (
-          <RecipeCard
-            key={ recipe.idMeal || recipe.idDrink }
-            recipe={ recipe }
-            index={ index }
-          />
-        ))}
-      </div>
+    <div className="recipes-container">
+      <Header title={ pathname } />
       <div className="categories-container">
         {categories.map((category, index) => (
           <button
             data-testid={ `${category.strCategory}-category-filter` }
             key={ index }
+            onClick={ () => handlefilter(category.strCategory) }
           >
             {category.strCategory}
           </button>
         ))}
       </div>
-    </>
+      {filter.length > 0
+        ? (filter.map((recipe, index) => (
+          <RecipeCard
+            key={ recipe.idMeal || recipe.idDrink }
+            recipe={ recipe }
+            index={ index }
+          />)))
+        : (recipes.map((recipe, index) => (
+          <RecipeCard
+            key={ recipe.idMeal || recipe.idDrink }
+            recipe={ recipe }
+            index={ index }
+          />
+        )))}
+    </div>
 
   );
 }
