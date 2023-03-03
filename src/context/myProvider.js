@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
 import React, { useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -9,7 +10,6 @@ function Provider({ children }) {
   const history = useHistory();
 
   const handleSearch = async (event, page) => {
-    console.log('carregando');
     event.preventDefault();
     const { target: { form: { radio, search } } } = event;
     // faz a validação se deve mostra um alerta ou fazer um requisição a API
@@ -28,7 +28,6 @@ function Provider({ children }) {
       }
       if (response.drinks) {
         const { drinks } = response;
-        console.log(drinks);
         if (drinks.length === 1) {
           const { idDrink } = drinks[0];
           history.push(`/drinks/${idDrink}`);
@@ -39,8 +38,8 @@ function Provider({ children }) {
 
   const value = useMemo(() => ({
     handleSearch,
-    ListOfProducts: listOfProducts,
-  }), [listOfProducts]);
+    listOfProducts,
+  }), [listOfProducts, handleSearch]);
   return (
     <MyContext.Provider value={ value }>
       {children}
