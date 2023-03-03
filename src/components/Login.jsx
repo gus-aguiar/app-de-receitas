@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Header from './Header';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -11,8 +12,6 @@ function Login() {
     const number = 6;
     const emailRegex = (/\S+@\S+\.\S+/);
     const pass = password.length > number && emailRegex.test(email);
-    console.log(password);
-    console.log(email);
     setDisabled(!pass);
   };
 
@@ -27,6 +26,7 @@ function Login() {
 
   return (
     <div>
+      <Header title="login" />
       <form>
         <input
           type="email"
