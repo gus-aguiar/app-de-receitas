@@ -15,6 +15,7 @@ function Recipes() {
   const [categories, setCategories] = useState([]);
   const [pathname, setPathname] = useState('');
   const [filter, setFilter] = useState([]);
+  const [toggle, setToggle] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,10 +42,13 @@ function Recipes() {
     const data = await (pathname === 'Meals'
       ? getMealsFiltered(category)
       : getDrinksFiltered(category));
-    console.log(data);
     const maxNumber = 12;
-    console.log(data.slice(0, maxNumber));
     setFilter(data.slice(0, maxNumber));
+    setToggle(false);
+  };
+  const cleanToggle = () => {
+    setFilter([]);
+    setToggle(true);
   };
 
   return (
@@ -55,11 +59,22 @@ function Recipes() {
           <button
             data-testid={ `${category.strCategory}-category-filter` }
             key={ index }
-            onClick={ () => handlefilter(category.strCategory) }
+            onClick={ () => (toggle
+              ? handlefilter(category.strCategory)
+              : cleanToggle()) }
           >
             {category.strCategory}
           </button>
         ))}
+      </div>
+      <div>
+        <button
+          data-testid="All-category-filter"
+          onClick={ () => setFilter([]) }
+        >
+          All
+
+        </button>
       </div>
       {filter.length > 0
         ? (filter.map((recipe, index) => (
