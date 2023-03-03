@@ -1,4 +1,5 @@
 export async function toggleAPI(type, search, page) {
+  console.log('carregando');
   // type verifica qual input radio foi escolhido e faz a requisição baseado nisso.
   if (page === 'Drinks') {
     if (type === 'ingredient') {
