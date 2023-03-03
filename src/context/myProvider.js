@@ -6,27 +6,16 @@ import MyContext from './myContext';
 import { toggleAPI } from '../utils/getAPI';
 
 function Provider({ children }) {
-  const [listOfProducts, setListOfProducts] = useState({});
+  const [listOfProducts, setListOfProducts] = useState(undefined);
   const history = useHistory();
 
-  const handleResponse = (response) => {
-    if (response.meals) {
-      const { meals } = response;
-      if (meals.length === 1) {
-        const { idMeal } = meals[0];
-        history.push(`/meals/${idMeal}`);
-      }
-    }
-    if (response.drinks) {
-      const { drinks } = response;
-      console.log(drinks);
-      if (drinks.length === 1) {
-        const { idDrink } = drinks[0];
-        history.push(`/drinks/${idDrink}`);
-      }
-    }
-    if (response.meals === null || response.drinks === null) {
+  const handleResponse = (response, page) => {
+    if (response === null) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    } else if (page === 'Drinks') {
+      history.push(`/drinks/${response[0].idDrink}`);
+    } else if (page === 'Meals') {
+      history.push(`/meals/${response[0].idMeal}`);
     }
   };
 
@@ -37,8 +26,8 @@ function Provider({ children }) {
       global.alert('Your search must have only 1 (one) character');
     } else {
       const response = await toggleAPI(radio.value, search.value, page);
+      handleResponse(response, page);
       setListOfProducts(response);
-      handleResponse(response);
     }
   };
 

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import context from '../context/myContext';
 import
 { getMeals,
   getDrinks,
@@ -12,27 +13,32 @@ function Recipes() {
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
   const [pathname, setPathname] = useState('');
+  const { listOfProducts } = useContext(context);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const endpoint = window.location.pathname === '/meals' ? 'getMeals' : 'getDrinks';
-      if (window.location.pathname === '/meals') {
-        setPathname('Meals');
-      } else {
-        setPathname('Drinks');
-      }
-      const data = await (endpoint === 'getMeals' ? getMeals() : getDrinks());
+    if (listOfProducts) {
       const maxNumber = 12;
-      setRecipes(data.slice(0, maxNumber));
-      const categoriesData = await (endpoint === 'getMeals'
-        ? getMealsCategories()
-        : getDrinksCategories());
-      const maxCategories = 5;
-      setCategories(categoriesData.slice(0, maxCategories));
-    };
-
-    fetchData();
-  }, []);
+      setRecipes(listOfProducts.slice(0, maxNumber));
+    } else {
+      const fetchData = async () => {
+        const endpoint = window.location.pathname === '/meals' ? 'getMeals' : 'getDrinks';
+        if (window.location.pathname === '/meals') {
+          setPathname('Meals');
+        } else {
+          setPathname('Drinks');
+        }
+        const data = await (endpoint === 'getMeals' ? getMeals() : getDrinks());
+        const maxNumber = 12;
+        setRecipes(data.slice(0, maxNumber));
+        const categoriesData = await (endpoint === 'getMeals'
+          ? getMealsCategories()
+          : getDrinksCategories());
+        const maxCategories = 5;
+        setCategories(categoriesData.slice(0, maxCategories));
+      };
+      fetchData();
+    }
+  }, [listOfProducts]);
 
   return (
     <>
