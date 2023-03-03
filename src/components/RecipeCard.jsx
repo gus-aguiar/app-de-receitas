@@ -6,7 +6,7 @@ import '../styles/card.css';
 
 function RecipeCard({ recipe, index }) {
   const { strMeal, strDrink, strMealThumb, strDrinkThumb, idMeal, idDrink } = recipe;
-  const recipeType = strMeal ? 'meal' : 'drink';
+  const recipeType = strMeal ? 'meals' : 'drinks';
   const name = strMeal || strDrink;
   const thumb = strMealThumb || strDrinkThumb;
   const linkToRecipe = `/${recipeType}/${idMeal || idDrink}`;
