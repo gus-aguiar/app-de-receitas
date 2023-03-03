@@ -2,18 +2,15 @@
   background-color: rgba(105, 110, 209, 0.365);
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.274);
 }
-
 .containerIcons {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
-
 .containerIconAndSearch {
   display: flex;
   justify-content: end;
 }
-
 .containerForm {
   width: 100%;
   text-align: center;
