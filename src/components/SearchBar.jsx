@@ -10,24 +10,34 @@ function SearchBar() {
         data-testid="search-input"
         name="search"
       />
-      <input
-        type="radio"
-        name="radio"
-        value="ingredient"
-        data-testid="ingredient-search-radio"
-      />
-      <input
-        type="radio"
-        name="radio"
-        value="name"
-        data-testid="name-search-radio"
-      />
-      <input
-        type="radio"
-        name="radio"
-        value="first-letter"
-        data-testid="first-letter-search-radio"
-      />
+
+      <label>
+        Ingredient
+        <input
+          type="radio"
+          name="radio"
+          value="ingredient"
+          data-testid="ingredient-search-radio"
+        />
+      </label>
+      <label>
+        Nome
+        <input
+          type="radio"
+          name="radio"
+          value="name"
+          data-testid="name-search-radio"
+        />
+      </label>
+      <label>
+        First Letter
+        <input
+          type="radio"
+          name="radio"
+          value="first-letter"
+          data-testid="first-letter-search-radio"
+        />
+      </label>
       <button
         type="submit"
         data-testid="exec-search-btn"

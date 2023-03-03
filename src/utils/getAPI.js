@@ -5,7 +5,7 @@ export async function toggleAPI(type, search) {
     return responseJSON;
   }
   if (type === 'name') {
-    const responseAPI = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s${search}`);
+    const responseAPI = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`);
     const responseJSON = await responseAPI.json();
     return responseJSON;
   }
