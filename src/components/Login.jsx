@@ -17,6 +17,7 @@ function Login() {
 
   useEffect(() => {
     validation();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email, password]);
 
   const handleSubmit = () => {
