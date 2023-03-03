@@ -9,6 +9,27 @@ function Provider({ children }) {
   const [listOfProducts, setListOfProducts] = useState({});
   const history = useHistory();
 
+  const handleResponse = (response) => {
+    if (response.meals) {
+      const { meals } = response;
+      if (meals.length === 1) {
+        const { idMeal } = meals[0];
+        history.push(`/meals/${idMeal}`);
+      }
+    }
+    if (response.drinks) {
+      const { drinks } = response;
+      console.log(drinks);
+      if (drinks.length === 1) {
+        const { idDrink } = drinks[0];
+        history.push(`/drinks/${idDrink}`);
+      }
+    }
+    if (response.meals === null || response.drinks === null) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+  };
+
   const handleSearch = async (event, page) => {
     event.preventDefault();
     const { target: { form: { radio, search } } } = event;
@@ -18,21 +39,7 @@ function Provider({ children }) {
     } else {
       const response = await toggleAPI(radio.value, search.value, page);
       setListOfProducts(response);
-      console.log(response);
-      if (response.meals) {
-        const { meals } = response;
-        if (meals.length === 1) {
-          const { idMeal } = meals[0];
-          history.push(`/meals/${idMeal}`);
-        }
-      }
-      if (response.drinks) {
-        const { drinks } = response;
-        if (drinks.length === 1) {
-          const { idDrink } = drinks[0];
-          history.push(`/drinks/${idDrink}`);
-        }
-      }
+      handleResponse(response);
     }
   };
 
