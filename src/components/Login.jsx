@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Header from './Header';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -27,6 +28,7 @@ function Login() {
 
   return (
     <div>
+      <Header title="login" />
       <form>
         <input
           type="email"
