@@ -1,0 +1,11 @@
+.footerContener {
+  display: flex;
+  position: fixed;
+  justify-content: space-around;
+  padding: 10px;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(105, 110, 209, 0.365);
+  border-top: 1px solid #e6e6e6;
+} 
+
