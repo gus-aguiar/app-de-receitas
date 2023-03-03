@@ -19,7 +19,6 @@ function Recipes() {
   const [toggle, setToggle] = useState(true);
   const { listOfProducts } = useContext(context);
 
-
   useEffect(() => {
     if (listOfProducts) {
       const maxNumber = 12;
