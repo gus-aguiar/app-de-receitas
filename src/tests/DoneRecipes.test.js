@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from './helpers/renderWith';
 import DoneRecipes from '../components/DoneRecipes';
 
@@ -39,33 +39,69 @@ describe('test do componente DoneRecipes', () => {
     const title = screen.getByRole('heading', { level: 1, name: 'Done Recipes' });
     expect(title).toBeInTheDocument();
   });
-  test('renders recipes that are meals', () => {
+  test('o componente renderiza as comidas', () => {
     renderWithRouter(<DoneRecipes />);
-    const recipeImg = screen.getByAltText('Beef and Mustard Pie');
-    const recipeName = screen.getByTestId('0-horizontal-name');
+    const recipeImgMeal = screen.getAllByAltText('Beef and Mustard Pie');
+    const recipeNameMeal = screen.getByTestId('0-horizontal-name');
     const recipeTopText = screen.getByTestId('0-horizontal-top-text');
     const recipeDate = screen.getByTestId('0-horizontal-done-date');
-    const recipeShareBtn = screen.getByTestId('0-horizontal-share-btn');
     const recipeTag = screen.getByTestId('0-pie-horizontal-tag');
     expect(recipeTopText).toHaveTextContent('Italian - beef');
     expect(recipeDate).toHaveTextContent('06/03/2023');
     expect(recipeTag).toHaveTextContent('pie');
-    expect(recipeImg).toBeInTheDocument();
-    expect(recipeName).toBeInTheDocument();
-    expect(recipeShareBtn).toBeInTheDocument();
+    expect(recipeImgMeal.length).toBe(2);
+    expect(recipeNameMeal).toBeInTheDocument();
   });
 
-  test('renders recipes that are drinks', () => {
+  test('o componente renderiza os drinks', () => {
     renderWithRouter(<DoneRecipes />);
-    const recipeImg = screen.getByAltText('A1');
-    const recipeName = screen.getByTestId('1-horizontal-name');
+    const recipeImgDrink = screen.getAllByAltText('A1');
+    const recipeNameDrink = screen.getByTestId('1-horizontal-name');
     const recipeTopText = screen.getByTestId('1-horizontal-top-text');
     const recipeDate = screen.getByTestId('1-horizontal-done-date');
-    const recipeShareBtn = screen.getByTestId('1-horizontal-share-btn');
     expect(recipeTopText).toHaveTextContent('alcoholic');
     expect(recipeDate).toHaveTextContent('07/03/2023');
-    expect(recipeImg).toBeInTheDocument();
-    expect(recipeName).toBeInTheDocument();
-    expect(recipeShareBtn).toBeInTheDocument();
+    expect(recipeImgDrink.length).toBe(2);
+    expect(recipeNameDrink).toBeInTheDocument();
+  });
+  test('o componente renderiza os botões', () => {
+    renderWithRouter(<DoneRecipes />);
+    const filterByDrinkBtn = screen.getByTestId('filter-by-drink-btn');
+    const filterByMealBtn = screen.getByTestId('filter-by-meal-btn');
+    const filterAllBtn = screen.getByTestId('filter-by-all-btn');
+    const shareBtn = screen.getByTestId('0-horizontal-share-btn');
+    expect(filterByDrinkBtn).toBeInTheDocument();
+    expect(filterByMealBtn).toBeInTheDocument();
+    expect(filterAllBtn).toBeInTheDocument();
+    expect(shareBtn).toBeInTheDocument();
+    userEvent.click(filterByDrinkBtn);
+    const recipeImg = screen.getAllByAltText('A1');
+    expect(recipeImg.length).toBe(2);
+    userEvent.click(filterByMealBtn);
+    userEvent.click(filterAllBtn);
+    const recipeImgAll = screen.getAllByAltText('A1');
+    expect(recipeImgAll.length).toBe(2);
+  });
+  test('o botão que copia para a Àrea de transferência das Meals', () => {
+    const clipboardMock = jest.fn();
+    Object.assign(navigator, { clipboard: { writeText: clipboardMock } });
+    renderWithRouter(<DoneRecipes />);
+    const shareBtn = screen.getByTestId('0-horizontal-share-btn');
+    const shareBtnTwo = screen.getByTestId('1-horizontal-share-btn');
+    expect(shareBtn).toBeInTheDocument();
+    expect(shareBtnTwo).toBeInTheDocument();
+    userEvent.click(shareBtn);
+    expect(clipboardMock).toHaveBeenCalledWith('http://localhost:3000/meals/52874');
+    const shareText = screen.getAllByText('Link copied!');
+    expect(shareText.length).toBe(2);
+  });
+  test('o botão que copia para a Àrea de transferência das Meals', () => {
+    const clipboardMock = jest.fn();
+    Object.assign(navigator, { clipboard: { writeText: clipboardMock } });
+    renderWithRouter(<DoneRecipes />);
+    const shareBtnTwo = screen.getByTestId('1-horizontal-share-btn');
+    expect(shareBtnTwo).toBeInTheDocument();
+    userEvent.click(shareBtnTwo);
+    expect(clipboardMock).toHaveBeenCalledWith('http://localhost:3000/drinks/178319');
   });
 });
