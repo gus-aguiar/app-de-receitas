@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from './Header';
 import shareIcon from '../images/shareIcon.svg';
-import { useHistory } from 'react-router-dom';
 
 function DoneRecipes() {
   const [isUrlCopied, setIsUrlCopied] = useState(false);
   const [isFilter, setIsFilter] = useState([]);
-  const history = useHistory();
 
   function copyUrl(event) {
     if (event.target.name === 'meal') {
       const url = `http://localhost:3000/meals/${event.target.id}`;
-      console.log(url);
       navigator.clipboard.writeText(url);
       setIsUrlCopied(true);
-    }
-    if (event.target.name === 'drink') {
+    } else {
       const url = `http://localhost:3000/drinks/${event.target.id}`;
-      console.log(url);
       navigator.clipboard.writeText(url);
       setIsUrlCopied(true);
     }
@@ -36,17 +32,11 @@ function DoneRecipes() {
     const drink = doneRecipes.filter((recipe) => recipe.type === 'drink');
     setIsFilter(drink);
   }
-  
-  function handlePush(event) {
-    history.push('/receitas-feitas');
-  }
-  
+
   useEffect(() => {
     const all = doneRecipes;
     setIsFilter(all);
   }, []);
-
-
 
   return (
     <div>
@@ -57,12 +47,16 @@ function DoneRecipes() {
       {isFilter.map((recipe, index) => (
         recipe.type === 'meal' ? (
           <div key={ recipe.id }>
-            <img
-              data-testid={ `${index}-horizontal-image` }
-              src={ recipe.image }
-              alt={ recipe.name }
-            />
-            <p data-testid={ `${index}-horizontal-name` } onClick{history.push()}>{recipe.name}</p>
+            <Link to={ `/meals/${recipe.id}` }>
+              <img
+                data-testid={ `${index}-horizontal-image` }
+                src={ recipe.image }
+                alt={ recipe.name }
+                width="50"
+                height="60"
+              />
+              <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
+            </Link>
             <p
               data-testid={ `${index}-horizontal-top-text` }
             >
@@ -96,16 +90,20 @@ function DoneRecipes() {
         )
           : (
             <div key={ recipe.id }>
-              <img
-                data-testid={ `${index}-horizontal-image` }
-                src={ recipe.image }
-                alt={ recipe.name }
-              />
-              <p
-                data-testid={ `${index}-horizontal-name` }
-              >
-                {recipe.name}
-              </p>
+              <Link to={ `/drinks/${recipe.id}` }>
+                <img
+                  data-testid={ `${index}-horizontal-image` }
+                  src={ recipe.image }
+                  alt={ recipe.name }
+                  width="50"
+                  height="60"
+                />
+                <p
+                  data-testid={ `${index}-horizontal-name` }
+                >
+                  {recipe.name}
+                </p>
+              </Link>
               <p
                 data-testid={ `${index}-horizontal-top-text` }
               >
