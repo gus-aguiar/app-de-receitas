@@ -38,7 +38,7 @@ describe('Teste a Page Profile', () => {
     expect(history.location.pathname).toBe('/done-recipes');
   });
 
-  test('Mostre se o botão funciona corretamente e limpa o localStorage', () => {
+  test('Mostre se o botão funciona corretamente e limpa o localStorage.', () => {
     window.localStorage.setItem('user', JSON.stringify({ email: 'test@example.com' }));
 
     const { getByTestId } = renderWithRouter(<Profile />);
