@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import shareIcon from '../images/shareIcon.svg';
+import { useHistory } from 'react-router-dom';
 
 function DoneRecipes() {
   const [isUrlCopied, setIsUrlCopied] = useState(false);
   const [isFilter, setIsFilter] = useState([]);
+  const history = useHistory();
 
   function copyUrl(event) {
     if (event.target.name === 'meal') {
       const url = `http://localhost:3000/meals/${event.target.id}`;
       console.log(url);
       navigator.clipboard.writeText(url);
-      alert('Link copied!');
       setIsUrlCopied(true);
     }
     if (event.target.name === 'drink') {
       const url = `http://localhost:3000/drinks/${event.target.id}`;
       console.log(url);
       navigator.clipboard.writeText(url);
-      alert('Link copied!');
       setIsUrlCopied(true);
     }
   }
@@ -36,10 +36,17 @@ function DoneRecipes() {
     const drink = doneRecipes.filter((recipe) => recipe.type === 'drink');
     setIsFilter(drink);
   }
+  
+  function handlePush(event) {
+    history.push('/receitas-feitas');
+  }
+  
   useEffect(() => {
     const all = doneRecipes;
     setIsFilter(all);
   }, []);
+
+
 
   return (
     <div>
@@ -55,7 +62,7 @@ function DoneRecipes() {
               src={ recipe.image }
               alt={ recipe.name }
             />
-            <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
+            <p data-testid={ `${index}-horizontal-name` } onClick{history.push()}>{recipe.name}</p>
             <p
               data-testid={ `${index}-horizontal-top-text` }
             >
