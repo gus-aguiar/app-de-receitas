@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import context from '../context/myContext';
 import
 { getMeals,
@@ -18,6 +19,7 @@ function Recipes() {
   const [filter, setFilter] = useState([]);
   const [toggle, setToggle] = useState(true);
   const { listOfProducts } = useContext(context);
+  const history = useHistory();
 
   useEffect(() => {
     if (listOfProducts) {
@@ -25,8 +27,9 @@ function Recipes() {
       setRecipes(listOfProducts.slice(0, maxNumber));
     } else {
       const fetchData = async () => {
-        const endpoint = window.location.pathname === '/meals' ? 'getMeals' : 'getDrinks';
-        if (window.location.pathname === '/meals') {
+        const endpoint = history
+          .location.pathname === '/meals' ? 'getMeals' : 'getDrinks';
+        if (history.location.pathname === '/meals') {
           setPathname('Meals');
         } else {
           setPathname('Drinks');
