@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import shareIcon from '../images/shareIcon.svg';
 
 function DoneRecipes() {
+  const [isUrlCopied, setIsUrlCopied] = useState(false);
+  const [isFilter, setIsFilter] = useState([]);
   // const recipes = [
   //   {
   //     id: '52874',
@@ -18,15 +20,49 @@ function DoneRecipes() {
   // ];
 
   // localStorage.setItem('doneRecipes', JSON.stringify(recipes));
+
+  function copyUrl(event) {
+    if (event.target.name === 'meal') {
+      const url = `http://localhost:3000/meals/${event.target.id}`;
+      console.log(url);
+      navigator.clipboard.writeText(url);
+      alert('Link copied!');
+      setIsUrlCopied(true);
+    }
+    if (event.target.name === 'drink') {
+      const url = `http://localhost:3000/drinks/${event.target.id}`;
+      console.log(url);
+      navigator.clipboard.writeText(url);
+      alert('Link copied!');
+      setIsUrlCopied(true);
+    }
+  }
   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-  console.log(doneRecipes);
+
+  function filterByAll() {
+    const all = doneRecipes;
+    setIsFilter(all);
+  }
+  function filterByMeal() {
+    const meal = doneRecipes.filter((recipe) => recipe.type === 'meal');
+    setIsFilter(meal);
+  }
+  function filterByDrink() {
+    const drink = doneRecipes.filter((recipe) => recipe.type === 'drink');
+    setIsFilter(drink);
+  }
+  useEffect(() => {
+    const all = doneRecipes;
+    setIsFilter(all);
+  }, []);
+
   return (
     <div>
       <Header title="Done Recipes" />
-      <button data-testid="filter-by-all-btn">All</button>
-      <button data-testid="filter-by-meal-btn">Meals</button>
-      <button data-testid="filter-by-drink-btn">Drinks</button>
-      {doneRecipes.map((recipe, index) => (
+      <button data-testid="filter-by-all-btn" onClick={ filterByAll }>All</button>
+      <button data-testid="filter-by-meal-btn" onClick={ filterByMeal }>Meals</button>
+      <button data-testid="filter-by-drink-btn" onClick={ filterByDrink }>Drinks</button>
+      {isFilter.map((recipe, index) => (
         recipe.type === 'meal' ? (
           <div key={ recipe.id }>
             <img
@@ -47,8 +83,20 @@ function DoneRecipes() {
               type="button"
               data-testid={ `${index}-horizontal-share-btn` }
               src={ shareIcon }
+              onClick={ copyUrl }
               label="share"
-            />
+              id={ recipe.id }
+              name={ recipe.type }
+            >
+              <img
+                src={ shareIcon }
+                alt={ recipe.name }
+                id={ recipe.id }
+                name={ recipe.type }
+              />
+
+            </button>
+            {isUrlCopied && <p>Link copied!</p>}
             {recipe.tags.map((tag, i) => (
               <p data-testid={ `${index}-${tag}-horizontal-tag` } key={ i }>{tag}</p>
             ))}
@@ -76,8 +124,19 @@ function DoneRecipes() {
                 type="button"
                 data-testid={ `${index}-horizontal-share-btn` }
                 src={ shareIcon }
+                onClick={ copyUrl }
                 label="share"
-              />
+
+              >
+                <img
+                  src={ shareIcon }
+                  alt={ recipe.name }
+                  id={ recipe.id }
+                  name={ recipe.type }
+                />
+
+              </button>
+              {isUrlCopied && <p>Link copied!</p>}
 
             </div>)
 
