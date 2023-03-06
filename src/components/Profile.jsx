@@ -5,7 +5,8 @@ function Profile() {
   const [email, setEmail] = useState('');
 
   useEffect(() => {
-    setEmail(JSON.parse(localStorage.getItem('user')).email);
+    const getEmail = JSON.parse(localStorage.getItem('user')).email;
+    setEmail(getEmail);
   }, []);
 
   const history = useHistory();
@@ -15,6 +16,11 @@ function Profile() {
 
   const handleClickFavorite = () => {
     history.push('/favorite-recipes');
+  };
+
+  const handleClickLogout = () => {
+    localStorage.clear();
+    history.push('/');
   };
 
   return (
@@ -32,7 +38,12 @@ function Profile() {
       >
         Favorite Recipes
       </button>
-      <button data-testid="profile-logout-btn">Logout</button>
+      <button
+        data-testid="profile-logout-btn"
+        onClick={ handleClickLogout }
+      >
+        Logout
+      </button>
     </div>
   );
 }
