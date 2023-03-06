@@ -5,21 +5,6 @@ import shareIcon from '../images/shareIcon.svg';
 function DoneRecipes() {
   const [isUrlCopied, setIsUrlCopied] = useState(false);
   const [isFilter, setIsFilter] = useState([]);
-  // const recipes = [
-  //   {
-  //     id: '52874',
-  //     type: 'meal',
-  //     nationality: 'Italian',
-  //     category: 'beef',
-  //     alcoholicOrNot: 'non-alcoholic',
-  //     name: 'Beef and Mustard Pie',
-  //     image: 'https://www.themealdb.com/images/media/meals/sytuqu1511553755.jpg',
-  //     doneDate: '06/03/2023',
-  //     tags: ['pie'],
-  //   },
-  // ];
-
-  // localStorage.setItem('doneRecipes', JSON.stringify(recipes));
 
   function copyUrl(event) {
     if (event.target.name === 'meal') {
