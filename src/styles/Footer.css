@@ -3,10 +3,14 @@
   border-top: 1px solid #e6e6e6;
   bottom: 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 10px;
   position: fixed;
   width: 100%;
+}
+.iconFoote {
+  margin-left: 25px;
+  margin-right: 40px;
 }
 
 .containerOfFooter {

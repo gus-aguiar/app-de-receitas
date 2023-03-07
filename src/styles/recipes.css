@@ -1,0 +1,7 @@
+.recipes-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 90%;
+  margin: auto;  
+  text-align: center;
+}

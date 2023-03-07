@@ -33,7 +33,7 @@ describe('test do componente SearchBar', () => {
     userEvent.click(getRadio);
     const getInput = screen.getByTestId(inputSearch);
     userEvent.type(getInput, 'Aquamarine');
-    await waitFor(async () => {
+    await waitFor(() => {
       const getButton = screen.getByText('buscar');
       userEvent.click(getButton);
       expect(history.location.pathname).toEqual('/drinks/178319');

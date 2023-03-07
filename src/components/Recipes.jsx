@@ -11,6 +11,7 @@ import
 } from '../services/recipesAPI';
 import Header from './Header';
 import RecipeCard from './RecipeCard';
+import '../styles/recipes.css';
 
 function Recipes() {
   const [recipes, setRecipes] = useState([]);
@@ -61,8 +62,17 @@ function Recipes() {
   };
 
   return (
-    <div className="recipes-container">
+    <>
       <Header title={ pathname } />
+      <div className="recipes-container">
+        {recipes.map((recipe, index) => (
+          <RecipeCard
+            key={ recipe.idMeal || recipe.idDrink }
+            recipe={ recipe }
+            index={ index }
+          />
+        ))}
+      </div>
       <div className="categories-container">
         {categories.map((category, index) => (
           <button
