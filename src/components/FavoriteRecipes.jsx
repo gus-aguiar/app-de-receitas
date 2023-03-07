@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import clipboardCopy from 'clipboard-copy';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import shareIcon from '../images/shareIcon.svg';
@@ -8,7 +7,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 function FavoriteRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useState(undefined);
   const [oldFavoriteRecipes, setOldFavoriteRecipes] = useState([]);
-  const [alet, setAlert] = useState(false);
+  const [alert, setAlert] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem('favoriteRecipes')) {
@@ -19,12 +18,12 @@ function FavoriteRecipes() {
   }, []);
 
   const handleShare = ({ target: { name, id } }) => {
-    setAlert(true);
     let url;
     if (name === 'meal') {
       url = `http://localhost:3000/meals/${id}`;
     } else url = `http://localhost:3000/drinks/${id}`;
-    clipboardCopy(url);
+    navigator.clipboard.writeText(url);
+    setAlert(true);
   };
 
   const handleHeart = ({ target: { id } }) => {
@@ -77,20 +76,19 @@ function FavoriteRecipes() {
       >
         Drinks
       </button>
-      {alet && (<p>Link copied!</p>)}
       {favoriteRecipes
       && favoriteRecipes.map((recipe, index) => (
         recipe.type === 'meal' ? (
           <div key={ recipe.id }>
             <Link
               to={ `/meals/${recipe.id}` }
-              data-testid={ `${index}-horizontal-image` }
-              src={ recipe.image }
             >
               <img
                 data-testid={ `${index}-horizontal-image` }
                 src={ recipe.image }
                 alt={ recipe.name }
+                width="50"
+                height="60"
               />
               <p data-testid={ `${index}-horizontal-name` }>
                 {recipe.name}
@@ -116,7 +114,6 @@ function FavoriteRecipes() {
             </button>
             <button
               type="button"
-              data-testid={ `${index}-horizontal-share-btn` }
               src={ shareIcon }
               label={ recipe.name }
               onClick={ handleShare }
@@ -129,20 +126,20 @@ function FavoriteRecipes() {
                 id={ recipe.id }
               />
             </button>
+            {alert && (<p>Link copied!</p>)}
           </div>
         )
           : (
             <div key={ recipe.id }>
               <Link
                 to={ `/drinks/${recipe.id}` }
-                data-testid={ `${index}-horizontal-image` }
-                src={ recipe.image }
               >
                 <img
                   data-testid={ `${index}-horizontal-image` }
                   src={ recipe.image }
                   alt={ recipe.name }
-                  to={ `/drinks/${recipe.id}` }
+                  width="50"
+                  height="60"
                 />
                 <p
                   data-testid={ `${index}-horizontal-name` }
@@ -177,13 +174,13 @@ function FavoriteRecipes() {
                 onClick={ handleShare }
               >
                 <img
-                  data-testid={ `${index}-horizontal-share-btn` }
                   src={ shareIcon }
                   alt={ recipe.name }
                   name={ recipe.type }
                   id={ recipe.id }
                 />
               </button>
+              {alert && (<p>Link copied!</p>)}
             </div>)
       ))}
     </div>
