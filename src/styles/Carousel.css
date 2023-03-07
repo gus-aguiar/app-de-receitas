@@ -1,0 +1,27 @@
+/* .carousel-conteiner {
+  width: 300px;
+  height: 150px;
+  background-color: black;
+  display: flex;
+  flex-flow: row nowrap;
+  overflow-x: scroll;
+}
+
+.carousel-card{
+  min-width: 140px;
+  min-height: 150px;
+  margin: 5px;
+} */
+
+.start-recipe-btn {
+  position: fixed;
+  bottom: 0px;
+}
+
+.alice-carousel__dots, .alice-carousel__prev-btn, .alice-carousel__next-btn {
+  display: none;
+}
+
+.alice-carousel__stage-item:nth-child(n + 3) {
+  display: none !important;
+}
