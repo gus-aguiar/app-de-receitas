@@ -1,15 +1,17 @@
 .recipe-card {
-  width: 200px;
-  height: 250px;
-  border-radius: 16px;
-  margin: 15px;
   background-color: rgba(105, 110, 209, 0.365);
+  border-radius: 16px;
+  height: 250px;
+  margin: 15px;
+  width: 200px;
 }
-.linkRecipeCard{
+
+.linkRecipeCard {
   text-decoration: none;
 }
+
 .recipe-card img {
-  border-radius: 15px 15px 0px 0px;
-  width: 100%;
+  border-radius: 15px 15px 0 0;
   overflow: hidden;
+  width: 100%;
 }

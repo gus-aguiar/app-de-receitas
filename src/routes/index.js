@@ -1,8 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Login from '../components/Login';
-// import DetalheMeals from '../components/DetalheMeals';
-// import DetalheDrinks from '../components/DetalheDrinks';
 import MealsInProgress from '../components/MealsInProgress';
 import DrinksInProgress from '../components/DrinksInProgress';
 import Profile from '../components/Profile';

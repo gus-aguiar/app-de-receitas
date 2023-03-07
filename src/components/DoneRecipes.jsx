@@ -18,6 +18,7 @@ function DoneRecipes() {
       setIsUrlCopied(true);
     }
   }
+
   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
 
   function filterByAll() {
@@ -34,6 +35,9 @@ function DoneRecipes() {
   }
 
   useEffect(() => {
+    if (!doneRecipes) {
+      setIsFilter([]);
+    }
     const all = doneRecipes;
     setIsFilter(all);
   }, []);
@@ -44,7 +48,8 @@ function DoneRecipes() {
       <button data-testid="filter-by-all-btn" onClick={ filterByAll }>All</button>
       <button data-testid="filter-by-meal-btn" onClick={ filterByMeal }>Meals</button>
       <button data-testid="filter-by-drink-btn" onClick={ filterByDrink }>Drinks</button>
-      {isFilter.map((recipe, index) => (
+      {isFilter
+      && isFilter.map((recipe, index) => (
         recipe.type === 'meal' ? (
           <div key={ recipe.id }>
             <Link to={ `/meals/${recipe.id}` }>
