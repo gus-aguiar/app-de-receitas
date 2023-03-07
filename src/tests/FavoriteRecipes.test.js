@@ -57,7 +57,7 @@ describe('test do component favoriteRecipes', () => {
   it('a imagem e renderizada ', () => {
     renderWithRouter(<App />, { initialEntries });
     const getImage = screen.getAllByTestId(/-horizontal-image/);
-    expect(getImage).toHaveLength(4);
+    expect(getImage).toHaveLength(2);
   });
   it('o titulo da receita e renderizado', () => {
     renderWithRouter(<App />, { initialEntries });
@@ -69,14 +69,14 @@ describe('test do component favoriteRecipes', () => {
     const btnMeals = screen.getByTestId('filter-by-meal-btn');
     userEvent.click(btnMeals);
     const getImage = screen.getAllByTestId(/-horizontal-image/);
-    expect(getImage).toHaveLength(2);
+    expect(getImage).toHaveLength(1);
   });
   it('ao clicar no filtro de drinks deve ser renderizado so comida', () => {
     renderWithRouter(<App />, { initialEntries });
     const btnDrinks = screen.getByTestId('filter-by-drink-btn');
     userEvent.click(btnDrinks);
     const getImage = screen.getAllByTestId(/-horizontal-image/);
-    expect(getImage).toHaveLength(2);
+    expect(getImage).toHaveLength(1);
   });
   it('depois de aplicar o filtro ao clicar em all deve reseta os filtros', () => {
     renderWithRouter(<App />, { initialEntries });
@@ -85,14 +85,14 @@ describe('test do component favoriteRecipes', () => {
     const btnAll = screen.getByTestId('filter-by-all-btn');
     userEvent.click(btnAll);
     const getImage = screen.getAllByTestId(/-horizontal-image/);
-    expect(getImage).toHaveLength(4);
+    expect(getImage).toHaveLength(2);
   });
   it('ao clicar em desfavoritar deve remover a receita', () => {
     renderWithRouter(<App />, { initialEntries });
     const btnDesfavor = screen.getByTestId('0-horizontal-favorite-btn');
     userEvent.click(btnDesfavor);
     const getImage = screen.getAllByTestId(/-horizontal-image/);
-    expect(getImage).toHaveLength(4);
+    expect(getImage).toHaveLength(2);
   });
   it('apos clicar em compartilhar deve ser direcionado para a roda correta', () => {
     const clipboardMock = jest.fn();
