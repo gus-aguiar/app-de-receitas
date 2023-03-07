@@ -24,8 +24,7 @@ function Recipes() {
 
   useEffect(() => {
     if (listOfProducts) {
-      const maxNumber = 12;
-      setRecipes(listOfProducts.slice(0, maxNumber));
+      setRecipes(listOfProducts);
     } else {
       const fetchData = async () => {
         const endpoint = history
@@ -46,9 +45,9 @@ function Recipes() {
       };
       fetchData();
     }
-  }, [listOfProducts]);
+  }, [listOfProducts, history]);
 
-  const handlefilter = async (category) => {
+  const handleFilter = async (category) => {
     const data = await (pathname === 'Meals'
       ? getMealsFiltered(category)
       : getDrinksFiltered(category));
@@ -64,22 +63,13 @@ function Recipes() {
   return (
     <>
       <Header title={ pathname } />
-      <div className="recipes-container">
-        {recipes.map((recipe, index) => (
-          <RecipeCard
-            key={ recipe.idMeal || recipe.idDrink }
-            recipe={ recipe }
-            index={ index }
-          />
-        ))}
-      </div>
       <div className="categories-container">
         {categories.map((category, index) => (
           <button
             data-testid={ `${category.strCategory}-category-filter` }
             key={ index }
             onClick={ () => (toggle
-              ? handlefilter(category.strCategory)
+              ? handleFilter(category.strCategory)
               : cleanToggle()) }
           >
             {category.strCategory}
@@ -95,7 +85,7 @@ function Recipes() {
 
         </button>
       </div>
-      <div>
+      <div className="recipes-container">
         {filter.length > 0
           ? (filter.map((recipe, index) => (
             <RecipeCard

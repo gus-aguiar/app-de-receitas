@@ -12,9 +12,9 @@ function Provider({ children }) {
   const handleResponse = (response, page) => {
     if (response === null) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
-    } else if (page === 'Drinks') {
+    } else if (page === 'Drinks' && response.length === 1) {
       history.push(`/drinks/${response[0].idDrink}`);
-    } else if (page === 'Meals') {
+    } else if (page === 'Meals' && response.length === 1) {
       history.push(`/meals/${response[0].idMeal}`);
     }
   };
@@ -26,8 +26,12 @@ function Provider({ children }) {
       global.alert('Your search must have only 1 (one) character');
     } else {
       const response = await toggleAPI(radio.value, search.value, page);
-      handleResponse(response, page);
-      setListOfProducts(response);
+      if (response === null || response.length === 1) {
+        handleResponse(response, page);
+      } else {
+        const maxNumber = 12;
+        setListOfProducts(response.slice(0, maxNumber));
+      }
     }
   };
 
@@ -44,6 +48,6 @@ function Provider({ children }) {
 
 Provider.propTypes = {
   children: PropTypes.any,
-}.isRquired;
+}.isRequired;
 
 export default Provider;

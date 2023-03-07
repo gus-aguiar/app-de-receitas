@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import Header from './Header';
 
 function Profile() {
   const [email, setEmail] = useState('');
 
   useEffect(() => {
-    const getEmail = JSON.parse(localStorage.getItem('user')).email;
-    setEmail(getEmail);
+    if (localStorage.getItem('user')) {
+      const getEmail = JSON.parse(localStorage.getItem('user')).email;
+      setEmail(getEmail);
+    }
   }, []);
 
   const history = useHistory();
@@ -24,27 +27,30 @@ function Profile() {
   };
 
   return (
-    <div>
-      <h2 data-testid="profile-email">{email}</h2>
-      <button
-        data-testid="profile-done-btn"
-        onClick={ handleClickDone }
-      >
-        Done Recipes
-      </button>
-      <button
-        data-testid="profile-favorite-btn"
-        onClick={ handleClickFavorite }
-      >
-        Favorite Recipes
-      </button>
-      <button
-        data-testid="profile-logout-btn"
-        onClick={ handleClickLogout }
-      >
-        Logout
-      </button>
-    </div>
+    <>
+      <Header title="Profile" />
+      <div>
+        <h2 data-testid="profile-email">{email}</h2>
+        <button
+          data-testid="profile-done-btn"
+          onClick={ handleClickDone }
+        >
+          Done Recipes
+        </button>
+        <button
+          data-testid="profile-favorite-btn"
+          onClick={ handleClickFavorite }
+        >
+          Favorite Recipes
+        </button>
+        <button
+          data-testid="profile-logout-btn"
+          onClick={ handleClickLogout }
+        >
+          Logout
+        </button>
+      </div>
+    </>
   );
 }
 

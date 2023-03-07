@@ -44,18 +44,16 @@ function SearchBar({ page }) {
           First Letter
         </label>
       </div>
-      <div>
-        <button
-          type="button"
-          data-testid="exec-search-btn"
-          onClick={ (event) => {
-            handleSearch(event, page);
-          } }
-          className="buttonSearch"
-        >
-          buscar
-        </button>
-      </div>
+      <button
+        type="button"
+        data-testid="exec-search-btn"
+        className="buttonSearch"
+        onClick={ (event) => {
+          handleSearch(event, page);
+        } }
+      >
+        buscar
+      </button>
     </form>
   );
 }
