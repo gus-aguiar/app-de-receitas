@@ -95,22 +95,23 @@ function Recipes() {
 
         </button>
       </div>
-      {filter.length > 0
-        ? (filter.map((recipe, index) => (
-          <RecipeCard
-            key={ recipe.idMeal || recipe.idDrink }
-            recipe={ recipe }
-            index={ index }
-          />)))
-        : (recipes.map((recipe, index) => (
-          <RecipeCard
-            key={ recipe.idMeal || recipe.idDrink }
-            recipe={ recipe }
-            index={ index }
-          />
-        )))}
-    </div>
-
+      <div>
+        {filter.length > 0
+          ? (filter.map((recipe, index) => (
+            <RecipeCard
+              key={ recipe.idMeal || recipe.idDrink }
+              recipe={ recipe }
+              index={ index }
+            />)))
+          : (recipes.map((recipe, index) => (
+            <RecipeCard
+              key={ recipe.idMeal || recipe.idDrink }
+              recipe={ recipe }
+              index={ index }
+            />
+          )))}
+      </div>
+    </>
   );
 }
 
