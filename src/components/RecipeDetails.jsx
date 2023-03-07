@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import AliceCarousel from 'react-alice-carousel';
-import 'react-alice-carousel/lib/alice-carousel.css';
 import '../styles/Carousel.css';
 
 export default function Details() {
@@ -98,30 +96,24 @@ export default function Details() {
       )}
       {recomendedRecipe ? (
         <div className="carousel-conteiner">
-          <AliceCarousel
-            responsive={ { 0: { items: 2 } } }
-            touchTracking={ false }
-            items={
-              recomendedRecipe.map((item, index) => (
-                <div
-                  data-testid={ `${index}-recommendation-card` }
-                  key={ index }
-                  className="carousel-card"
-                >
-                  <img
-                    className="d-block w-100"
-                    src={ item.strMealThumb || item.strDrinkThumb }
-                    alt={ `${item.strMeal || item.strDrink}` }
-                    width="150px"
-                  />
-                  <p data-testid={ `${index}-recommendation-title` }>
-                    { item.strDrink }
-                    { item.strMeal }
-                  </p>
-                </div>
-              ))
-            }
-          />
+          {recomendedRecipe.map((item, index) => (
+            <div
+              data-testid={ `${index}-recommendation-card` }
+              key={ index }
+              className="carousel-card"
+            >
+              <img
+                className="d-block w-100"
+                src={ item.strMealThumb || item.strDrinkThumb }
+                alt={ `${item.strMeal || item.strDrink}` }
+                width="150px"
+              />
+              <p data-testid={ `${index}-recommendation-title` }>
+                { item.strDrink }
+                { item.strMeal }
+              </p>
+            </div>
+          ))}
         </div>
       ) : (
         <div>Nenhuma recomedação encontrada</div>
