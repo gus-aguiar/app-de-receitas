@@ -1,37 +1,10 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from './helpers/renderWith';
 import App from '../App';
 
 describe('test do component favoriteRecipes', () => {
-  // beforeEach(() => {
-  //   class LocalStorageMock {
-  //     constructor() {
-  //       this.store = {
-  //
-  //       };
-  //     }
-
-  //     clear() {
-  //       this.store = {};
-  //     }
-
-  //     getItem(key) {
-  //       return this.store[key] || null;
-  //     }
-
-  //     setItem(key, value) {
-  //       this.store[key] = String(value);
-  //     }
-
-  //     removeItem(key) {
-  //       delete this.store[key];
-  //     }
-  //   }
-
-  //   global.localStorage = new LocalStorageMock();
-  // });
   const favoriteRecipes = [
     {
       id: '52771',
