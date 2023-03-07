@@ -5,7 +5,8 @@ import '../styles/Footer.css';
 
 function Footer() {
   return (
-    <footer data-testid="footer" className="footerContener">
+    <div className="containerOfFooter">
+      <footer data-testid="footer" className="footerContener">
       <a
         href="/drinks"
         className="iconFoote"
@@ -27,6 +28,7 @@ function Footer() {
         />
       </a>
     </footer>
+    </div>
   );
 }
 
