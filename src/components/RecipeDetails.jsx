@@ -12,10 +12,17 @@ export default function Details() {
   const [isDisabled, setIsDisabled] = useState(false);
   const [inProgressRecipes, setInProgressRecipes] = useState(undefined);
   const history = useHistory();
+  const [isUrlCopied, setIsUrlCopied] = useState(false);
   const web = (token === 'meals') ? 'themealdb' : 'thecocktaildb';
   const invertedWeb = (token === 'meals') ? 'thecocktaildb' : 'themealdb';
   const magicNumber = 15;
   const max = 6;
+
+  function copyUrl() {
+    const url = `http://localhost:3000${history.location.pathname}`;
+    navigator.clipboard.writeText(url);
+    setIsUrlCopied(true);
+  }
 
   const handleStart = ({ target }) => {
     if (target.innerText === 'Start Recipe') {
@@ -152,6 +159,7 @@ export default function Details() {
         type="button"
         data-testid="share-btn"
         src={ shareIcon }
+        onClick={ copyUrl }
         label="share"
       >
         <img
@@ -179,6 +187,7 @@ export default function Details() {
       >
         {inProgressRecipes ? 'Continue Recipe' : 'Start Recipe'}
       </button>
+      {isUrlCopied && <p>Link copied!</p>}
     </div>
   );
 }
