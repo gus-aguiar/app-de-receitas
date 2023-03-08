@@ -7,7 +7,6 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import context from '../context/myContext';
 
 export default function Details() {
-  const [recipe, setRecipe] = useState();
   const [recomendedRecipe, setRecomendedRecipe] = useState();
   const { pathname } = useLocation();
   const [token, id] = pathname.slice(1).split('/');
@@ -15,7 +14,13 @@ export default function Details() {
   const [inProgressRecipes, setInProgressRecipes] = useState(undefined);
   const history = useHistory();
   const [isUrlCopied, setIsUrlCopied] = useState(false);
-  const { handleHeart, isFavorite, setIsFavorite } = useContext(context);
+  const {
+    handleHeart,
+    isFavorite,
+    setIsFavorite,
+    recipe,
+    setRecipe,
+  } = useContext(context);
 
   const web = (token === 'meals') ? 'themealdb' : 'thecocktaildb';
   const invertedWeb = (token === 'meals') ? 'thecocktaildb' : 'themealdb';
@@ -39,7 +44,7 @@ export default function Details() {
     if (localStorage.getItem('favoriteRecipes')) {
       favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     }
-    if (recipe) {
+    if (favoriteRecipes && recipe) {
       favoriteRecipes.forEach((data) => {
         if (data.id === (recipe[0].idDrink || recipe[0].idMeal)) {
           setIsFavorite(true);

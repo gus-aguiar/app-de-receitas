@@ -9,6 +9,7 @@ function Provider({ children }) {
   const [listOfProducts, setListOfProducts] = useState(undefined);
   const history = useHistory();
   const [isFavorite, setIsFavorite] = useState(false);
+  const [recipe, setRecipe] = useState();
 
   const createObject = () => {
     const {
@@ -90,7 +91,17 @@ function Provider({ children }) {
     handleHeart,
     isFavorite,
     setIsFavorite,
-  }), [listOfProducts, handleSearch, handleHeart, isFavorite, setIsFavorite]);
+    recipe,
+    setRecipe,
+  }), [
+    listOfProducts,
+    handleSearch,
+    handleHeart,
+    isFavorite,
+    setIsFavorite,
+    recipe,
+    setRecipe,
+  ]);
   return (
     <MyContext.Provider value={ value }>
       {children}
