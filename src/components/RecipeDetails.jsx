@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import '../styles/Carousel.css';
+import shareIcon from '../images/shareIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 export default function Details() {
   const [recipe, setRecipe] = useState();
@@ -9,10 +11,18 @@ export default function Details() {
   const [token, id] = pathname.slice(1).split('/');
   const [isDisabled, setIsDisabled] = useState(false);
   const [inProgressRecipes, setInProgressRecipes] = useState(undefined);
+  const history = useHistory();
   const web = (token === 'meals') ? 'themealdb' : 'thecocktaildb';
   const invertedWeb = (token === 'meals') ? 'thecocktaildb' : 'themealdb';
   const magicNumber = 15;
   const max = 6;
+
+  const handleStart = ({ target }) => {
+    if (target.innerText === 'Start Recipe') {
+      history.push(`${history.location.pathname}/in-progress`);
+    }
+  };
+
   useEffect(() => {
     fetch(`https://www.${web}.com/api/json/v1/1/lookup.php?i=${id}`)
       .then((response) => response.json())
@@ -139,9 +149,33 @@ export default function Details() {
         <div>Nenhuma recomedação encontrada</div>
       )}
       <button
+        type="button"
+        data-testid="share-btn"
+        src={ shareIcon }
+        label="share"
+      >
+        <img
+          src={ shareIcon }
+          alt="Share"
+        />
+
+      </button>
+      <button
+        type="button"
+        data-testid="favorite-btn"
+        src={ blackHeartIcon }
+        label="Favorite"
+      >
+        <img
+          src={ blackHeartIcon }
+          alt="Favorito"
+        />
+      </button>
+      <button
         data-testid="start-recipe-btn"
         className="start-recipe-btn"
         disabled={ isDisabled }
+        onClick={ handleStart }
       >
         {inProgressRecipes ? 'Continue Recipe' : 'Start Recipe'}
       </button>
