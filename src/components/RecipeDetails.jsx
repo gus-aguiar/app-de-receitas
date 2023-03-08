@@ -7,6 +7,7 @@ export default function Details() {
   const [recomendedRecipe, setRecomendedRecipe] = useState();
   const { pathname } = useLocation();
   const [token, id] = pathname.slice(1).split('/');
+  const [isDisabled, setIsDisabled] = useState(false);
   const web = (token === 'meals') ? 'themealdb' : 'thecocktaildb';
   const invertedWeb = (token === 'meals') ? 'thecocktaildb' : 'themealdb';
   const magicNumber = 15;
@@ -24,13 +25,25 @@ export default function Details() {
   }
 
   useEffect(() => {
+    if (localStorage.getItem('doneRecipes')) {
+      const idRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      if (recipe) {
+        idRecipes.forEach((data) => {
+          if (data.id === (recipe[0].idDrink || recipe[0].idMeal)) {
+            setIsDisabled(true);
+          }
+        });
+      }
+    }
+  }, [recipe]);
+
+  useEffect(() => {
     fetch(`https://www.${invertedWeb}.com/api/json/v1/1/search.php?s=`)
       .then((response) => response.json())
       .then((data) => setRecomendedRecipe((data.meals
         || data.drinks).slice(0, max)));
   }, [id, token, invertedWeb]);
-  console.log(recomendedRecipe);
-
+  console.log(isDisabled);
   return (
     <div>
       {recipe ? (
@@ -41,6 +54,8 @@ export default function Details() {
                 data-testid="recipe-photo"
                 src={ item.strMealThumb || item.strDrinkThumb }
                 alt={ `${item.strMeal || item.strDrink}` }
+                width="50"
+                height="60"
               />
               <ul data-testid="recipe-title">
                 { item.strMeal || item.strDrink }
@@ -121,6 +136,7 @@ export default function Details() {
       <button
         data-testid="start-recipe-btn"
         className="start-recipe-btn"
+        disabled={ isDisabled }
       >
         Start Recipe
       </button>
