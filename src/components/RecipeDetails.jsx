@@ -8,6 +8,7 @@ export default function Details() {
   const { pathname } = useLocation();
   const [token, id] = pathname.slice(1).split('/');
   const [isDisabled, setIsDisabled] = useState(false);
+  const [inProgressRecipes, setInProgressRecipes] = useState(undefined);
   const web = (token === 'meals') ? 'themealdb' : 'thecocktaildb';
   const invertedWeb = (token === 'meals') ? 'thecocktaildb' : 'themealdb';
   const magicNumber = 15;
@@ -34,6 +35,10 @@ export default function Details() {
           }
         });
       }
+    }
+    if (localStorage.getItem('inProgressRecipes')) {
+      const progress = localStorage.getItem('inProgressRecipes');
+      setInProgressRecipes(progress);
     }
   }, [recipe]);
 
@@ -138,7 +143,7 @@ export default function Details() {
         className="start-recipe-btn"
         disabled={ isDisabled }
       >
-        Start Recipe
+        {inProgressRecipes ? 'Continue Recipe' : 'Start Recipe'}
       </button>
     </div>
   );
