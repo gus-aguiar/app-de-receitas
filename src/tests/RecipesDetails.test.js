@@ -1,8 +1,8 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+// import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from './helpers/renderWith';
-import RecipesDetails from '../components/RecipeDetails';
+import App from '../App';
 
 beforeEach(() => {
   const recipes = [
@@ -32,10 +32,41 @@ beforeEach(() => {
 
 describe('test ', () => {
   it('tem um imagem da receita', async () => {
-    renderWithRouter(<RecipesDetails />);
+    renderWithRouter(<App />, { initialEntries: ['/meals/52874'] });
     await waitFor(() => {
       const img = screen.getByTestId('recipe-photo');
       expect(img).toBeInTheDocument();
+      const title = screen.getByTestId('recipe-title');
+      expect(title).toBeInTheDocument();
+      const shareBtn = screen.getByTestId('start-recipe-btn');
+      expect(shareBtn).toBeInTheDocument();
+      const ingredienteUm = screen.getByTestId('0-ingredient-name-and-measure');
+      expect(ingredienteUm).toBeInTheDocument();
+      const instructions = screen.getByTestId('instructions');
+      expect(instructions).toBeInTheDocument();
+      const video = screen.getByTestId('video');
+      expect(video).toBeInTheDocument();
+      const recomendationCard = screen.getByTestId('0-recommendation-card');
+      expect(recomendationCard).toBeInTheDocument();
+    });
+  });
+  it('tem um imagem da receita', async () => {
+    renderWithRouter(<App />, { initialEntries: ['/drinks/178319'] });
+    await waitFor(() => {
+      const img = screen.getByTestId('recipe-photo');
+      expect(img).toBeInTheDocument();
+      const title = screen.getByTestId('recipe-title');
+      expect(title).toBeInTheDocument();
+      const shareBtn = screen.getByTestId('start-recipe-btn');
+      expect(shareBtn).toBeInTheDocument();
+      const ingredienteUm = screen.getByTestId('0-ingredient-name-and-measure');
+      expect(ingredienteUm).toBeInTheDocument();
+      const instructions = screen.getByTestId('instructions');
+      expect(instructions).toBeInTheDocument();
+      const video = screen.getByTestId('video');
+      expect(video).toBeInTheDocument();
+      const recomendationCard = screen.getByTestId('0-recommendation-card');
+      expect(recomendationCard).toBeInTheDocument();
     });
   });
 });
