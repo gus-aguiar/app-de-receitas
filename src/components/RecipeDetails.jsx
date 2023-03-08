@@ -18,6 +18,54 @@ export default function Details() {
   const magicNumber = 15;
   const max = 6;
 
+  const createObject = () => {
+    const {
+      strMeal,
+      strDrink,
+      strMealThumb,
+      strDrinkThumb,
+      idMeal,
+      idDrink,
+      strArea,
+      strCategory,
+      strAlcoholic,
+    } = recipe[0];
+    console.log(recipe[0]);
+    const type = strMeal ? 'meal' : 'drink';
+    const name = strMeal || strDrink;
+    const image = strMealThumb || strDrinkThumb;
+    const idRecipe = idMeal || idDrink;
+    return {
+      id: idRecipe,
+      type,
+      nationality: strArea || '',
+      category: strCategory,
+      alcoholicOrNot: strAlcoholic || '',
+      name,
+      image,
+    };
+  };
+
+  const handleHeart = () => {
+    let favoriteRecipes;
+    if (localStorage.getItem('favoriteRecipes')) {
+      favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    }
+
+    if (favoriteRecipes) {
+      const newListFavorite = [
+        ...favoriteRecipes,
+        createObject(),
+      ];
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newListFavorite));
+    } else {
+      const newListFavorite = [
+        createObject(),
+      ];
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newListFavorite));
+    }
+  };
+
   function copyUrl() {
     const url = `http://localhost:3000${history.location.pathname}`;
     navigator.clipboard.writeText(url);
@@ -173,6 +221,7 @@ export default function Details() {
         data-testid="favorite-btn"
         src={ blackHeartIcon }
         label="Favorite"
+        onClick={ handleHeart }
       >
         <img
           src={ blackHeartIcon }
