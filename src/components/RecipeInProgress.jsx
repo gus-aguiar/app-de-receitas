@@ -1,16 +1,54 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import context from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import '../styles/RecipeInProgress.css';
 
 function RecipeInProgress() {
   const { recipe, setRecipe } = useContext(context);
   const { pathname } = useLocation();
   const [token, id] = pathname.slice(1).split('/');
-
+  const [isChecked, setIsChecked] = useState([]);
   const web = (token === 'meals') ? 'themealdb' : 'thecocktaildb';
   const magicNumber = 15;
+
+  const handleCheck = (event) => {
+    const { target } = event;
+    setIsChecked([...isChecked, target.id]);
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem('inProgressRecipes')) {
+      const oldInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      if (oldInProgress[token].id === id) {
+        setIsChecked(oldInProgress[token].isChecked);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem('inProgressRecipes')) {
+      const oldInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      console.log(oldInProgress);
+      if (recipe) {
+        const object = {
+          ...oldInProgress,
+          [token]: {
+            id: recipe[0].idDrink || recipe[0].idMeal,
+            isChecked,
+          } };
+        localStorage.setItem('inProgressRecipes', JSON.stringify(object));
+      }
+    } else if (recipe) {
+      const object = {
+        [token]: {
+          id: recipe[0].idDrink || recipe[0].idMeal,
+          isChecked,
+        } };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(object));
+    }
+  }, [isChecked]);
 
   useEffect(() => {
     console.log(pathname);
@@ -53,11 +91,19 @@ function RecipeInProgress() {
               }
               return (
                 <div key={ number }>
-                  <label data-testid={ `${number}-ingredient-step` }>
+                  <label
+                    className={ isChecked.includes(`${number}`) ? 'riscado' : '' }
+                    data-testid={ `${number}-ingredient-step` }
+                  >
                     <input
+                      checked={ isChecked.includes(`${number}`) }
+                      id={ number }
+                      onClick={ handleCheck }
                       type="checkbox"
                     />
-                    <p data-testid={ `${number}-ingredient-name-and-measure` }>
+                    <p
+                      data-testid={ `${number}-ingredient-name-and-measure` }
+                    >
                       { `${ingredientName} - ${measure}` }
                     </p>
                   </label>
