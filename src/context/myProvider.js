@@ -8,6 +8,56 @@ import { toggleAPI } from '../utils/getAPI';
 function Provider({ children }) {
   const [listOfProducts, setListOfProducts] = useState(undefined);
   const history = useHistory();
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [recipe, setRecipe] = useState();
+
+  const createObject = () => {
+    const {
+      strMeal,
+      strDrink,
+      strMealThumb,
+      strDrinkThumb,
+      idMeal,
+      idDrink,
+      strArea,
+      strCategory,
+      strAlcoholic,
+    } = recipe[0];
+    const type = strMeal ? 'meal' : 'drink';
+    const name = strMeal || strDrink;
+    const image = strMealThumb || strDrinkThumb;
+    const idRecipe = idMeal || idDrink;
+    return {
+      id: idRecipe,
+      type,
+      nationality: strArea || '',
+      category: strCategory,
+      alcoholicOrNot: strAlcoholic || '',
+      name,
+      image,
+    };
+  };
+
+  const handleHeart = () => {
+    setIsFavorite(!isFavorite);
+    let favoriteRecipes;
+    if (localStorage.getItem('favoriteRecipes')) {
+      favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    }
+
+    if (favoriteRecipes) {
+      const newListFavorite = [
+        ...favoriteRecipes,
+        createObject(),
+      ];
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newListFavorite));
+    } else {
+      const newListFavorite = [
+        createObject(),
+      ];
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newListFavorite));
+    }
+  };
 
   const handleResponse = (response, page) => {
     if (response === null) {
@@ -38,7 +88,20 @@ function Provider({ children }) {
   const value = useMemo(() => ({
     handleSearch,
     listOfProducts,
-  }), [listOfProducts, handleSearch]);
+    handleHeart,
+    isFavorite,
+    setIsFavorite,
+    recipe,
+    setRecipe,
+  }), [
+    listOfProducts,
+    handleSearch,
+    handleHeart,
+    isFavorite,
+    setIsFavorite,
+    recipe,
+    setRecipe,
+  ]);
   return (
     <MyContext.Provider value={ value }>
       {children}

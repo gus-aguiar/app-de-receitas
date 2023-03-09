@@ -121,7 +121,6 @@ function DoneRecipes() {
                 src={ shareIcon }
                 onClick={ copyUrl }
                 label="share"
-
               >
                 <img
                   src={ shareIcon }

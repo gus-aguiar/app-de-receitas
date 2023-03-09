@@ -1,16 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import '../styles/Carousel.css';
+import shareIcon from '../images/shareIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import context from '../context/myContext';
 
 export default function Details() {
-  const [recipe, setRecipe] = useState();
   const [recomendedRecipe, setRecomendedRecipe] = useState();
   const { pathname } = useLocation();
   const [token, id] = pathname.slice(1).split('/');
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [inProgressRecipes, setInProgressRecipes] = useState(undefined);
+  const history = useHistory();
+  const [isUrlCopied, setIsUrlCopied] = useState(false);
+  const {
+    handleHeart,
+    isFavorite,
+    setIsFavorite,
+    recipe,
+    setRecipe,
+  } = useContext(context);
+
   const web = (token === 'meals') ? 'themealdb' : 'thecocktaildb';
   const invertedWeb = (token === 'meals') ? 'thecocktaildb' : 'themealdb';
   const magicNumber = 15;
   const max = 6;
+
+  function copyUrl() {
+    const url = `http://localhost:3000${history.location.pathname}`;
+    navigator.clipboard.writeText(url);
+    setIsUrlCopied(true);
+  }
+
+  useEffect(() => {
+    let favoriteRecipes;
+    if (localStorage.getItem('favoriteRecipes')) {
+      favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    }
+    if (favoriteRecipes && recipe) {
+      favoriteRecipes.forEach((data) => {
+        if (data.id === (recipe[0].idDrink || recipe[0].idMeal)) {
+          setIsFavorite(true);
+        }
+      });
+    }
+  }, [recipe, setIsFavorite]);
+
   useEffect(() => {
     fetch(`https://www.${web}.com/api/json/v1/1/lookup.php?i=${id}`)
       .then((response) => response.json())
@@ -24,12 +60,28 @@ export default function Details() {
   }
 
   useEffect(() => {
+    if (localStorage.getItem('doneRecipes')) {
+      const idRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      if (recipe) {
+        idRecipes.forEach((data) => {
+          if (data.id === (recipe[0].idDrink || recipe[0].idMeal)) {
+            setIsDisabled(true);
+          }
+        });
+      }
+    }
+    if (localStorage.getItem('inProgressRecipes')) {
+      const progress = localStorage.getItem('inProgressRecipes');
+      setInProgressRecipes(progress);
+    }
+  }, [recipe]);
+
+  useEffect(() => {
     fetch(`https://www.${invertedWeb}.com/api/json/v1/1/search.php?s=`)
       .then((response) => response.json())
       .then((data) => setRecomendedRecipe((data.meals
         || data.drinks).slice(0, max)));
   }, [id, token, invertedWeb]);
-  console.log(recomendedRecipe);
 
   return (
     <div>
@@ -41,6 +93,8 @@ export default function Details() {
                 data-testid="recipe-photo"
                 src={ item.strMealThumb || item.strDrinkThumb }
                 alt={ `${item.strMeal || item.strDrink}` }
+                width="50"
+                height="60"
               />
               <ul data-testid="recipe-title">
                 { item.strMeal || item.strDrink }
@@ -119,11 +173,69 @@ export default function Details() {
         <div>Nenhuma recomedação encontrada</div>
       )}
       <button
-        data-testid="start-recipe-btn"
-        className="start-recipe-btn"
+        type="button"
+        data-testid="share-btn"
+        src={ shareIcon }
+        onClick={ copyUrl }
+        label="share"
       >
-        Start Recipe
+        <img
+          src={ shareIcon }
+          alt="Share"
+        />
+
       </button>
+
+      {isFavorite ? (
+        <button
+          type="button"
+          data-testid="favorite-btn"
+          src={ blackHeartIcon }
+          label="Favorite"
+          onClick={ handleHeart }
+        >
+          <img
+            src={ blackHeartIcon }
+            alt="Favorito"
+          />
+        </button>
+      ) : (
+        <button
+          type="button"
+          data-testid="favorite-btn"
+          src={ whiteHeartIcon }
+          label="Favorite"
+          onClick={ handleHeart }
+        >
+          <img
+            src={ whiteHeartIcon }
+            alt="Favorito"
+          />
+        </button>
+      )}
+      {inProgressRecipes
+        ? (
+          <button
+            data-testid="start-recipe-btn"
+            className="start-recipe-btn"
+            disabled={ isDisabled }
+
+          >
+            Continue Recipe
+          </button>
+        )
+        : (
+          <Link to={ `${history.location.pathname}/in-progress` }>
+            <button
+              data-testid="start-recipe-btn"
+              className="start-recipe-btn"
+              disabled={ isDisabled }
+            >
+              Start Recipe
+            </button>
+          </Link>
+        )}
+      {isUrlCopied && <p>Link copied!</p>}
     </div>
   );
 }
