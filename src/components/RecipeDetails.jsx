@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import '../styles/Carousel.css';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -32,12 +32,6 @@ export default function Details() {
     navigator.clipboard.writeText(url);
     setIsUrlCopied(true);
   }
-
-  const handleStart = ({ target }) => {
-    if (target.innerText === 'Start Recipe') {
-      history.push(`${history.location.pathname}/in-progress`);
-    }
-  };
 
   useEffect(() => {
     let favoriteRecipes;
@@ -219,15 +213,28 @@ export default function Details() {
           />
         </button>
       )}
+      {inProgressRecipes
+        ? (
+          <button
+            data-testid="start-recipe-btn"
+            className="start-recipe-btn"
+            disabled={ isDisabled }
 
-      <button
-        data-testid="start-recipe-btn"
-        className="start-recipe-btn"
-        disabled={ isDisabled }
-        onClick={ handleStart }
-      >
-        {inProgressRecipes ? 'Continue Recipe' : 'Start Recipe'}
-      </button>
+          >
+            Continue Recipe
+          </button>
+        )
+        : (
+          <Link to={ `${history.location.pathname}/in-progress` }>
+            <button
+              data-testid="start-recipe-btn"
+              className="start-recipe-btn"
+              disabled={ isDisabled }
+            >
+              Start Recipe
+            </button>
+          </Link>
+        )}
       {isUrlCopied && <p>Link copied!</p>}
     </div>
   );
