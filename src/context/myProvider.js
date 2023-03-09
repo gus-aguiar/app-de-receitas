@@ -38,24 +38,39 @@ function Provider({ children }) {
     };
   };
 
-  const handleHeart = () => {
-    setIsFavorite(!isFavorite);
-    let favoriteRecipes;
-    if (localStorage.getItem('favoriteRecipes')) {
-      favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    }
+  const handleHeart = (id, bool) => {
+    console.log(isFavorite);
+    if (bool) {
+      setIsFavorite(!bool);
+      let favoriteRecipes;
+      if (localStorage.getItem('favoriteRecipes')) {
+        favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      }
 
-    if (favoriteRecipes) {
-      const newListFavorite = [
-        ...favoriteRecipes,
-        createObject(),
-      ];
-      localStorage.setItem('favoriteRecipes', JSON.stringify(newListFavorite));
-    } else {
-      const newListFavorite = [
-        createObject(),
-      ];
-      localStorage.setItem('favoriteRecipes', JSON.stringify(newListFavorite));
+      if (favoriteRecipes) {
+        const newListFavorite = [
+          ...favoriteRecipes,
+          createObject(),
+        ];
+        localStorage.setItem('favoriteRecipes', JSON.stringify(newListFavorite));
+      } else {
+        const newListFavorite = [
+          createObject(),
+        ];
+        localStorage.setItem('favoriteRecipes', JSON.stringify(newListFavorite));
+      }
+    } else if (localStorage.getItem('favoriteRecipes')) {
+      setIsFavorite(!bool);
+      const favoriteRecipes = JSON.parse(localStorage
+        .getItem('favoriteRecipes'));
+      if (favoriteRecipes.length === 1) {
+        localStorage.clear('favoriteRecipes');
+      } else {
+        const newFavoriteRecipes = favoriteRecipes
+          .filter((receita) => receita.id !== id);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteRecipes));
+        // setFavoriteRecipes(newFavoriteRecipes);
+      }
     }
   };
 

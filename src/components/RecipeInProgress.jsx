@@ -3,20 +3,55 @@ import { useLocation } from 'react-router-dom';
 import context from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import '../styles/RecipeInProgress.css';
 
 function RecipeInProgress() {
-  const { recipe, setRecipe } = useContext(context);
   const { pathname } = useLocation();
   const [token, id] = pathname.slice(1).split('/');
   const [isChecked, setIsChecked] = useState([]);
+  const [isUrlCopied, setIsUrlCopied] = useState(false);
   const web = (token === 'meals') ? 'themealdb' : 'thecocktaildb';
   const magicNumber = 15;
+  const {
+    recipe,
+    setRecipe,
+    handleHeart,
+    isFavorite,
+    setIsFavorite,
+  } = useContext(context);
 
   const handleCheck = (event) => {
     const { target } = event;
     setIsChecked([...isChecked, target.id]);
   };
+
+  function copyUrl() {
+    const url = `http://localhost:3000/${token}/${id}`;
+    navigator.clipboard.writeText(url);
+    setIsUrlCopied(true);
+  }
+
+  useEffect(() => {
+    let favoriteRecipes;
+    if (localStorage.getItem('favoriteRecipes')) {
+      favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    }
+    if (favoriteRecipes && recipe) {
+      favoriteRecipes.forEach((data) => {
+        if (data.id === (recipe[0].idDrink || recipe[0].idMeal)) {
+          setIsFavorite(true);
+        }
+      });
+    }
+  }, [recipe, setIsFavorite]);
+
+  useEffect(() => {
+    if (localStorage.getItem('favoriteRecipes')) {
+      const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      setFavoriteRecipes(recipes);
+    }
+  }, []);
 
   useEffect(() => {
     if (localStorage.getItem('inProgressRecipes')) {
@@ -96,7 +131,7 @@ function RecipeInProgress() {
                     data-testid={ `${number}-ingredient-step` }
                   >
                     <input
-                      checked={ isChecked.includes(`${number}`) }
+                      checked={ isChecked.includes(`${number}`) || false }
                       id={ number }
                       onClick={ handleCheck }
                       type="checkbox"
@@ -118,7 +153,7 @@ function RecipeInProgress() {
         type="button"
         data-testid="share-btn"
         src={ shareIcon }
-        // onClick={ copyUrl }
+        onClick={ copyUrl }
         label="share"
       >
         <img
@@ -127,23 +162,39 @@ function RecipeInProgress() {
         />
 
       </button>
-      <button
-        type="button"
-        data-testid="favorite-btn"
-        src={ blackHeartIcon }
-        label="Favorite"
-        // onClick={ handleHeart }
-      >
-        <img
+      {isFavorite ? (
+        <button
+          type="button"
+          data-testid="favorite-btn"
           src={ blackHeartIcon }
-          alt="Favorito"
-        />
-      </button>
+          label="Favorite"
+          onClick={ () => handleHeart(id, false) }
+        >
+          <img
+            src={ blackHeartIcon }
+            alt="Favorito"
+          />
+        </button>
+      ) : (
+        <button
+          type="button"
+          data-testid="favorite-btn"
+          src={ whiteHeartIcon }
+          label="Favorite"
+          onClick={ () => handleHeart(id, true) }
+        >
+          <img
+            src={ whiteHeartIcon }
+            alt="Favorito"
+          />
+        </button>
+      )}
       <button
         data-testid="finish-recipe-btn"
       >
         Finalizar Receita
       </button>
+      {isUrlCopied && <p>Link copied!</p>}
     </div>
   );
 }
