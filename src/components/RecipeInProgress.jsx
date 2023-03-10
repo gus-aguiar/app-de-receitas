@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import context from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -26,22 +26,35 @@ function RecipeInProgress() {
   const handleCheck = (event) => {
     const { target } = event;
     const { checked } = target;
-    // const listOfIngredient = window.document.getElementById('container-of-ingredient');
-    // const limit = listOfIngredient.childElementCount;
     if (checked) {
       const newIsChecked = [...isChecked, target.id];
-      console.log(newIsChecked.length);
-      // if (limit === newIsChecked.length) {
-      //   setDisabled(false);
-      // }
       setIsChecked(newIsChecked);
     } else {
       const newIsChecked = isChecked.filter((data) => data !== target.id);
-      console.log(newIsChecked.length);
-      // if (limit > newIsChecked.length) {
-      //   setDisabled(true);
-      // }
       setIsChecked([...newIsChecked]);
+    }
+  };
+
+  const handleStartRecipe = () => ({
+    id: recipe[0].idDrink || recipe[0].idMeal,
+    type: token === 'meals' ? 'meal' : 'drink',
+    nationality: recipe[0].strArea || '',
+    category: recipe[0].strCategory,
+    alcoholicOrNot: recipe[0].strAlcoholic || '',
+    name: recipe[0].strDrink || recipe[0].strMeal,
+    image: recipe[0].strDrinkThumb || recipe[0].strMealThumb,
+    doneDate: new Date(),
+    tags: recipe[0].strTags ? recipe[0].strTags.split(',') : [],
+  });
+
+  const handleDoneRecipe = () => {
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (doneRecipes) {
+      const newDoneRecipes = [...doneRecipes, handleStartRecipe()];
+      localStorage.setItem('doneRecipes', JSON.stringify(newDoneRecipes));
+    } else {
+      const newDoneRecipes = [handleStartRecipe()];
+      localStorage.setItem('doneRecipes', JSON.stringify(newDoneRecipes));
     }
   };
 
@@ -216,12 +229,15 @@ function RecipeInProgress() {
           />
         </button>
       )}
-      <button
-        data-testid="finish-recipe-btn"
-        disabled={ disabled }
-      >
-        Finalizar Receita
-      </button>
+      <Link to="/done-recipes">
+        <button
+          data-testid="finish-recipe-btn"
+          disabled={ disabled }
+          onClick={ () => handleDoneRecipe() }
+        >
+          Finalizar Receita
+        </button>
+      </Link>
       {isUrlCopied && <p>Link copied!</p>}
     </div>
   );

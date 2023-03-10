@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Header from './Header';
+// import Header from './Header';
+import '../styles/login.css';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -27,9 +28,10 @@ function Login() {
 
   return (
     <div>
-      <Header title="login" />
-      <form>
+      {/* <Header title="login" /> */}
+      <form className="loginForm">
         <input
+          className="loginInput"
           type="email"
           name="mailInput"
           data-testid="email-input"
@@ -38,6 +40,7 @@ function Login() {
           onChange={ ({ target: { value } }) => setEmail(value) }
         />
         <input
+          className="loginInput"
           type="password"
           name="passwordInput"
           data-testid="password-input"
@@ -47,6 +50,7 @@ function Login() {
         />
 
         <button
+          className="loginBtn"
           type="submit"
           data-testid="login-submit-btn"
           disabled={ disabled }

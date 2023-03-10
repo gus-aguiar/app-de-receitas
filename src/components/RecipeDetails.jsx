@@ -192,7 +192,7 @@ export default function Details() {
           data-testid="favorite-btn"
           src={ blackHeartIcon }
           label="Favorite"
-          onClick={ handleHeart }
+          onClick={ () => handleHeart(id, false) }
         >
           <img
             src={ blackHeartIcon }
@@ -205,7 +205,7 @@ export default function Details() {
           data-testid="favorite-btn"
           src={ whiteHeartIcon }
           label="Favorite"
-          onClick={ handleHeart }
+          onClick={ () => handleHeart(id, true) }
         >
           <img
             src={ whiteHeartIcon }

@@ -1,0 +1,35 @@
+@media screen and ( max-width : 360px ) {
+
+  .loginForm {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    padding-top: 80%;
+  }
+
+  .loginInput {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin: 3px;
+    padding: 10px;
+    width: 70%;
+  }
+
+  .loginBtn {
+    background-color: #4caf50;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    margin: 3px;
+    padding: 10px;
+    width: 76%;
+  }
+
+  .login {
+    width: 100%;
+  }
+}

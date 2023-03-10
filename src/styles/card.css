@@ -15,3 +15,36 @@
   overflow: hidden;
   width: 100%;
 }
+
+@media screen and ( max-width : 360px ) {
+
+  .recipe-card {
+    width: 100%;
+  }
+
+  .recipe-card .recipe-card-content {
+    padding: 10px;
+  }
+
+  .recipe-card .recipe-card-content h2 {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+
+  .recipe-card .recipe-card-content p {
+    font-size: 0.8rem;
+    margin: 0;
+  }
+
+  .recipe-card .recipe-card-content .recipe-card-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+
+  .recipe-card .recipe-card-content .recipe-card-footer .recipe-card-footer-left {
+    display: flex;
+  }
+
+}
+
