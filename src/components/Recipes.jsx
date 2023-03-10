@@ -12,6 +12,7 @@ import
 import Header from './Header';
 import RecipeCard from './RecipeCard';
 import '../styles/recipes.css';
+import Footer from './Footer';
 
 function Recipes() {
   const [recipes, setRecipes] = useState([]);
@@ -101,6 +102,7 @@ function Recipes() {
             />
           )))}
       </div>
+      <Footer />
     </>
   );
 }

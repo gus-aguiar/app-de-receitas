@@ -29,13 +29,22 @@ function Login() {
   return (
     <div>
       {/* <Header title="login" /> */}
+      <div>
+        <div className="metadeDeCima">
+          <img className="loguinho" src="logoRecipesApp.png" alt="loguinho" />
+
+          <img src="tomate.png" alt="tomatinho" className="tomatinho" />
+
+        </div>
+      </div>
       <form className="loginForm">
+        <p className="login">LOGIN</p>
         <input
           className="loginInput"
           type="email"
           name="mailInput"
           data-testid="email-input"
-          placeholder="email"
+          placeholder="Email"
           value={ email }
           onChange={ ({ target: { value } }) => setEmail(value) }
         />
@@ -44,7 +53,7 @@ function Login() {
           type="password"
           name="passwordInput"
           data-testid="password-input"
-          placeholder="senha"
+          placeholder="Senha"
           value={ password }
           onChange={ ({ target: { value } }) => setPassword(value) }
         />
