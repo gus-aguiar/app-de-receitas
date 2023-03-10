@@ -10,6 +10,7 @@ function Provider({ children }) {
   const history = useHistory();
   const [isFavorite, setIsFavorite] = useState(false);
   const [recipe, setRecipe] = useState();
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
 
   const createObject = () => {
     const {
@@ -39,17 +40,16 @@ function Provider({ children }) {
   };
 
   const handleHeart = (id, bool) => {
-    console.log(isFavorite);
+    setIsFavorite(bool);
     if (bool) {
-      setIsFavorite(!bool);
-      let favoriteRecipes;
+      let listFavorite;
       if (localStorage.getItem('favoriteRecipes')) {
-        favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+        listFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
       }
 
-      if (favoriteRecipes) {
+      if (listFavorite) {
         const newListFavorite = [
-          ...favoriteRecipes,
+          ...listFavorite,
           createObject(),
         ];
         localStorage.setItem('favoriteRecipes', JSON.stringify(newListFavorite));
@@ -60,16 +60,15 @@ function Provider({ children }) {
         localStorage.setItem('favoriteRecipes', JSON.stringify(newListFavorite));
       }
     } else if (localStorage.getItem('favoriteRecipes')) {
-      setIsFavorite(!bool);
-      const favoriteRecipes = JSON.parse(localStorage
+      const listFavorite = JSON.parse(localStorage
         .getItem('favoriteRecipes'));
-      if (favoriteRecipes.length === 1) {
+      if (listFavorite.length === 1) {
         localStorage.clear('favoriteRecipes');
       } else {
-        const newFavoriteRecipes = favoriteRecipes
+        const newFavoriteRecipes = listFavorite
           .filter((receita) => receita.id !== id);
         localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteRecipes));
-        // setFavoriteRecipes(newFavoriteRecipes);
+        setFavoriteRecipes(newFavoriteRecipes);
       }
     }
   };
@@ -108,6 +107,8 @@ function Provider({ children }) {
     setIsFavorite,
     recipe,
     setRecipe,
+    favoriteRecipes,
+    setFavoriteRecipes,
   }), [
     listOfProducts,
     handleSearch,
@@ -116,6 +117,8 @@ function Provider({ children }) {
     setIsFavorite,
     recipe,
     setRecipe,
+    favoriteRecipes,
+    setFavoriteRecipes,
   ]);
   return (
     <MyContext.Provider value={ value }>

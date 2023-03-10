@@ -11,6 +11,7 @@ function RecipeInProgress() {
   const [token, id] = pathname.slice(1).split('/');
   const [isChecked, setIsChecked] = useState([]);
   const [isUrlCopied, setIsUrlCopied] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const web = (token === 'meals') ? 'themealdb' : 'thecocktaildb';
   const magicNumber = 15;
   const {
@@ -19,11 +20,29 @@ function RecipeInProgress() {
     handleHeart,
     isFavorite,
     setIsFavorite,
+    setFavoriteRecipes,
   } = useContext(context);
 
   const handleCheck = (event) => {
     const { target } = event;
-    setIsChecked([...isChecked, target.id]);
+    const { checked } = target;
+    // const listOfIngredient = window.document.getElementById('container-of-ingredient');
+    // const limit = listOfIngredient.childElementCount;
+    if (checked) {
+      const newIsChecked = [...isChecked, target.id];
+      console.log(newIsChecked.length);
+      // if (limit === newIsChecked.length) {
+      //   setDisabled(false);
+      // }
+      setIsChecked(newIsChecked);
+    } else {
+      const newIsChecked = isChecked.filter((data) => data !== target.id);
+      console.log(newIsChecked.length);
+      // if (limit > newIsChecked.length) {
+      //   setDisabled(true);
+      // }
+      setIsChecked([...newIsChecked]);
+    }
   };
 
   function copyUrl() {
@@ -31,6 +50,16 @@ function RecipeInProgress() {
     navigator.clipboard.writeText(url);
     setIsUrlCopied(true);
   }
+
+  useEffect(() => {
+    if (window.document.getElementById('container-of-ingredient')) {
+      const listOfIngredient = window.document.getElementById('container-of-ingredient');
+      const limit = listOfIngredient.childElementCount;
+      if (limit === isChecked.length) {
+        setDisabled(false);
+      } else setDisabled(true);
+    }
+  }, [isChecked, recipe]);
 
   useEffect(() => {
     let favoriteRecipes;
@@ -65,7 +94,6 @@ function RecipeInProgress() {
   useEffect(() => {
     if (localStorage.getItem('inProgressRecipes')) {
       const oldInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      console.log(oldInProgress);
       if (recipe) {
         const object = {
           ...oldInProgress,
@@ -86,13 +114,13 @@ function RecipeInProgress() {
   }, [isChecked]);
 
   useEffect(() => {
-    console.log(pathname);
     fetch(`https://www.${web}.com/api/json/v1/1/lookup.php?i=${id}`)
       .then((response) => response.json())
       .then((data) => setRecipe(data[token]))
       .catch((error) => console.error(error));
   }, []);
 
+  console.log(disabled);
   return (
     <div>
       {recipe && (recipe.map((item, index) => (
@@ -116,11 +144,10 @@ function RecipeInProgress() {
               { item.strInstructions }
             </ul>
           </div>
-          <div>
+          <div id="container-of-ingredient">
             {item && [...Array(magicNumber)].map((_, number) => {
               const ingredientName = item[`strIngredient${number + 1}`];
               const measure = item[`strMeasure${number + 1}`];
-
               if (!ingredientName || !measure) {
                 return null;
               }
@@ -133,7 +160,7 @@ function RecipeInProgress() {
                     <input
                       checked={ isChecked.includes(`${number}`) || false }
                       id={ number }
-                      onClick={ handleCheck }
+                      onChange={ handleCheck }
                       type="checkbox"
                     />
                     <p
@@ -191,6 +218,7 @@ function RecipeInProgress() {
       )}
       <button
         data-testid="finish-recipe-btn"
+        disabled={ disabled }
       >
         Finalizar Receita
       </button>
