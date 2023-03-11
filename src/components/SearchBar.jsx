@@ -14,8 +14,9 @@ function SearchBar({ page }) {
         data-testid="search-input"
         name="search"
         className="inputSearch"
+        placeholder="Search"
       />
-      <div>
+      <div className="radioContainer">
         <label>
           <input
             type="radio"
@@ -52,7 +53,7 @@ function SearchBar({ page }) {
           handleSearch(event, page);
         } }
       >
-        buscar
+        SEARCH
       </button>
     </form>
   );

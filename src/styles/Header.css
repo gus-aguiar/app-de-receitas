@@ -1,52 +1,95 @@
 .headerComponent {
-  background-color: rgba(105, 110, 209, 0.365);
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.274);
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .containerIcons {
+  background-color: #fcdc36;
+  box-shadow: 1px 1px 20px 1px rgb(0 0 0 / 25%);
   display: flex;
+  height: 45px;
   justify-content: space-between;
+  margin-bottom: 15%;
   width: 100%;
+
+}
+
+.iconMeals {
+  width: 18.3%;
+}
+
+.iconDrinks {
+  width: 13.3%;
+}
+
+.cloche {
+  margin-left: 20px;
+  width: 38px;
+}
+
+.divzinha {
+  align-items: center;
+  display: flex;
+  margin-top: 3px;
 }
 
 .containerIconAndSearch {
+  background-color: #fcdc36;
+  box-shadow: 1px 1px 20px 1px rgb(0 0 0 / 25%);
   display: flex;
-  justify-content: end;
-}
-
-.containerForm {
-  text-align: center;
+  height: 45px;
+  justify-content: space-between;
+  margin-bottom: 15%;
   width: 100%;
 }
 
-.containerForm input {
-  margin: 10px;
+.containerForm {
+  background-color: #41197f;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  text-align: center;
+  width: 340px;
 }
 
+
 .inputSearch {
-  border: none;
+  border: 1.5px solid #b1b1b1;
   border-radius: 6px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.274);
-  height: 25px;
-  margin: 10px;
-  width: 90%;
+  height: 35px;
+  margin-bottom: 20px;
+  width: 334px;
+}
+
+.inputSearch::placeholder {
+  color: #797d86;
+  font-size: 17px;
+  font-weight: 300;
+  padding-left: 10px;
 }
 
 .buttonSearch {
-  background-color: yellow;
+  background-color: #fcc436;
   border: none;
-  border-radius: 6px;
-  box-sizing: 2px 2px 4px rgba(0, 0, 0, 0.274);
-  color: grey;
-  height: 25px;
+  border-radius: 8px;
+  color: white;
+  font-size: large;
+  font-weight: 800;
+  height: 10%;
   margin: 10px;
-  width: 200px;
+  padding: 10px;
+  width: 85%;
 }
 
-.buttonSearch:hover {
-  background-color: rgb(253, 253, 9);
-  transform: scale(1.09, 1.09);
+.radioContainer {
+  color: white;
+  display: flex;
+  font-size: 16px;
+  font-weight: 100;
+  justify-content: space-between;
+  margin: 10px;
 }
+
 
 .iconButtonSearch {
   background: transparent;
@@ -61,6 +104,9 @@
 }
 
 .headerTitle {
+  color: #41197f;
+  font-weight: 900;
+  margin: 5px;
   padding: 10px;
   text-align: center;
 }

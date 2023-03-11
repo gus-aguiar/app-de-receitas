@@ -15,17 +15,21 @@ function Footer() {
             src={ drinkIcon }
             alt="drinks"
             data-testid="drinks-bottom-btn"
+            className="icon"
           />
         </a>
         <a
           href="/meals"
           className="iconFoote"
         >
-          <img
-            src={ mealIcon }
-            alt="meals"
-            data-testid="meals-bottom-btn"
-          />
+          <span className="icon">
+            <img
+              src={ mealIcon }
+              alt="meals"
+              data-testid="meals-bottom-btn"
+              className="icon"
+            />
+          </span>
         </a>
       </footer>
     </div>
