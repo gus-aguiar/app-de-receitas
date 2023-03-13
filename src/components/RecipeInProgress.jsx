@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import context from '../context/myContext';
-import shareIcon from '../images/shareIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import shareIcon from '../images/Share.svg';
+import blackHeartIcon from '../images/blackHeartIcon.png';
+import whiteHeartIcon from '../images/whiteHeartItem.png';
 import '../styles/RecipeInProgress.css';
 
 function RecipeInProgress() {
@@ -138,14 +138,12 @@ function RecipeInProgress() {
     <div>
       {recipe && (recipe.map((item, index) => (
         <div key={ index }>
-          <div>
-            <img
-              data-testid="recipe-photo"
-              src={ item.strMealThumb || item.strDrinkThumb }
-              alt={ `${item.strMeal || item.strDrink}` }
-              width="50"
-              height="60"
-            />
+          <div
+            className="drinksContainer"
+            style={ ({
+              backgroundImage: `url(${item.strMealThumb || item.strDrinkThumb})`,
+            }) }
+          >
             <ul data-testid="recipe-title">
               { item.strMeal || item.strDrink }
             </ul>

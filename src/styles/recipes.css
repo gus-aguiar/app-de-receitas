@@ -1,7 +1,19 @@
 .recipes-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   margin: auto;
-  text-align: center;
-  width: 90%;
+}
+
+.category-button {
+  background-color: transparent;
+  border: none;
+  height: 70px;
+  width: 60px;
+}
+
+.categories-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }

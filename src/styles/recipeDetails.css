@@ -1,5 +1,18 @@
-.riscado {
-  text-decoration: line-through solid black;
+.carousel-conteiner {
+  display: flex;
+  flex-flow: row nowrap;
+  height: 200px;
+  overflow-x: scroll;
+  width: 350px;
+}
+
+.carousel-card {
+  border: 0.5px solid #b1b1b1;
+  height: 100px;
+  margin: 10px;
+  width: 240px;
+
+  /* overflow: hidden; */
 }
 
 .drinksContainer {
@@ -110,4 +123,3 @@
   width: 300px;
 
 }
-

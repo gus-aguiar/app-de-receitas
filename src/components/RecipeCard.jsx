@@ -24,8 +24,15 @@ function RecipeCard({ recipe, index }) {
           src={ thumb }
           alt={ `Imagem de ${name}` }
           data-testid={ `${index}-card-img` }
+          className="recipe-card-img"
         />
-        <p data-testid={ `${index}-card-name` }>{name}</p>
+        <p
+          data-testid={ `${index}-card-name` }
+          className="recipe-card-name"
+        >
+          {name}
+
+        </p>
       </div>
     </Link>
   );

@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import '../styles/Carousel.css';
-import shareIcon from '../images/shareIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import '../styles/recipeDetails.css';
+import shareIcon from '../images/Share.svg';
+import blackHeartIcon from '../images/blackHeartIcon.png';
+import whiteHeartIcon from '../images/whiteHeartItem.png';
 import context from '../context/myContext';
 
 export default function Details() {
@@ -21,7 +21,6 @@ export default function Details() {
     recipe,
     setRecipe,
   } = useContext(context);
-
   const web = (token === 'meals') ? 'themealdb' : 'thecocktaildb';
   const invertedWeb = (token === 'meals') ? 'thecocktaildb' : 'themealdb';
   const magicNumber = 15;
@@ -88,40 +87,44 @@ export default function Details() {
       {recipe ? (
         <div>
           {recipe.map((item, index) => (
-            <div key={ index }>
-              <img
-                data-testid="recipe-photo"
-                src={ item.strMealThumb || item.strDrinkThumb }
-                alt={ `${item.strMeal || item.strDrink}` }
-                width="50"
-                height="60"
-              />
-              <ul data-testid="recipe-title">
-                { item.strMeal || item.strDrink }
-              </ul>
-              <ul data-testid="recipe-category">
-                <p>{ item.strCategory }</p>
-                { item.strDrink ? <p>{ item.strAlcoholic }</p> : null }
-              </ul>
-              <div>
-                {item && [...Array(magicNumber)].map((_, number) => {
-                  const ingredientName = item[`strIngredient${number + 1}`];
-                  const measure = item[`strMeasure${number + 1}`];
-
-                  if (!ingredientName || !measure) {
-                    return null;
-                  }
-
-                  return (
-                    <div key={ number }>
-                      <p data-testid={ `${number}-ingredient-name-and-measure` }>
-                        { `${ingredientName} - ${measure}` }
-                      </p>
-                    </div>
-                  );
-                })}
+            <div
+              key={ index }
+            >
+              <div
+                className="drinksContainer"
+                style={ ({
+                  backgroundImage: `url(${item.strMealThumb || item.strDrinkThumb})`,
+                }) }
+              >
+                <ul data-testid="recipe-title" className="title">
+                  { item.strMeal || item.strDrink }
+                </ul>
+                <ul data-testid="recipe-category">
+                  <p className="itemCategory">{ item.strCategory }</p>
+                </ul>
               </div>
-              <ul data-testid="instructions">
+              <div>
+                <h1 className="ingredientTitle">INGREDIENTS</h1>
+                <ul className="ingredientsList">
+                  {item && [...Array(magicNumber)].map((_, number) => {
+                    const ingredientName = item[`strIngredient${number + 1}`];
+                    const measure = item[`strMeasure${number + 1}`];
+                    if (!ingredientName || !measure) {
+                      return null;
+                    }
+                    return (
+                      <li
+                        data-testid={ `${number}-ingredient-name-and-measure` }
+                        key={ number }
+                      >
+                        { `${ingredientName} - ${measure}` }
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+              <h1 className="ingredientTitle">INSTRUCTIONS</h1>
+              <ul data-testid="instructions" className="instructionsList">
                 { item.strInstructions }
               </ul>
               { item.strYoutube && (
@@ -162,7 +165,7 @@ export default function Details() {
                 alt={ `${item.strMeal || item.strDrink}` }
                 width="150px"
               />
-              <p data-testid={ `${index}-recommendation-title` }>
+              <p data-testid={ `${index}-recommendation-title` } className="carName">
                 { item.strDrink }
                 { item.strMeal }
               </p>
@@ -172,69 +175,73 @@ export default function Details() {
       ) : (
         <div>Nenhuma recomedação encontrada</div>
       )}
-      <button
-        type="button"
-        data-testid="share-btn"
-        src={ shareIcon }
-        onClick={ copyUrl }
-        label="share"
-      >
-        <img
+      <div className="buttons">
+        <button
+          type="button"
+          data-testid="share-btn"
           src={ shareIcon }
-          alt="Share"
-        />
-
-      </button>
-
-      {isFavorite ? (
-        <button
-          type="button"
-          data-testid="favorite-btn"
-          src={ blackHeartIcon }
-          label="Favorite"
-          onClick={ () => handleHeart(id, false) }
+          onClick={ copyUrl }
+          label="share"
+          className="shareBtn"
         >
           <img
-            src={ blackHeartIcon }
-            alt="Favorito"
+            src={ shareIcon }
+            alt="Share"
           />
         </button>
-      ) : (
-        <button
-          type="button"
-          data-testid="favorite-btn"
-          src={ whiteHeartIcon }
-          label="Favorite"
-          onClick={ () => handleHeart(id, true) }
-        >
-          <img
-            src={ whiteHeartIcon }
-            alt="Favorito"
-          />
-        </button>
-      )}
-      {inProgressRecipes
-        ? (
+        {isFavorite ? (
           <button
-            data-testid="start-recipe-btn"
-            className="start-recipe-btn"
-            disabled={ isDisabled }
-
+            type="button"
+            data-testid="favorite-btn"
+            src={ blackHeartIcon }
+            label="Favorite"
+            onClick={ () => handleHeart(id, false) }
+            className="favoriteBtn"
           >
-            Continue Recipe
+            <img
+              src={ blackHeartIcon }
+              alt="Favorito"
+            />
           </button>
-        )
-        : (
-          <Link to={ `${history.location.pathname}/in-progress` }>
+        ) : (
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            src={ whiteHeartIcon }
+            label="Favorite"
+            onClick={ () => handleHeart(id, true) }
+            className="favoriteBtn"
+          >
+            <img
+              src={ whiteHeartIcon }
+              alt="Favorito"
+            />
+          </button>
+        )}
+      </div>
+      <div style={ { textAlign: 'center' } }>
+        {inProgressRecipes
+          ? (
             <button
               data-testid="start-recipe-btn"
               className="start-recipe-btn"
               disabled={ isDisabled }
             >
-              Start Recipe
+              Continue Recipe
             </button>
-          </Link>
-        )}
+          )
+          : (
+            <Link to={ `${history.location.pathname}/in-progress` } className="link">
+              <button
+                data-testid="start-recipe-btn"
+                className="start-recipe-btn"
+                disabled={ isDisabled }
+              >
+                Start Recipe
+              </button>
+            </Link>
+          )}
+      </div>
       {isUrlCopied && <p>Link copied!</p>}
     </div>
   );

@@ -13,6 +13,18 @@ import Header from './Header';
 import RecipeCard from './RecipeCard';
 import '../styles/recipes.css';
 import Footer from './Footer';
+import All from '../images/All.svg';
+import beef from '../images/beef.svg';
+import chicken from '../images/chicken.svg';
+import dessert from '../images/dessert.svg';
+import goat from '../images/goat.svg';
+import breakfast from '../images/breakfast.svg';
+import AllDrinks from '../images/AllDrinks.svg';
+import ordinaryDrink from '../images/ordinaryDrink.svg';
+import cocktail from '../images/cocktail.svg';
+import shake from '../images/shake.svg';
+import other from '../images/other.svg';
+import cocoa from '../images/cocoa.svg';
 
 function Recipes() {
   const [recipes, setRecipes] = useState([]);
@@ -60,6 +72,19 @@ function Recipes() {
     setFilter([]);
     setToggle(true);
   };
+  const mealIcons = [
+    beef,
+    breakfast,
+    chicken,
+    dessert,
+    goat];
+  const drinkIcons = [
+    ordinaryDrink,
+    cocktail,
+    shake,
+    other,
+    cocoa,
+  ];
 
   return (
     <>
@@ -72,17 +97,24 @@ function Recipes() {
             onClick={ () => (toggle
               ? handleFilter(category.strCategory)
               : cleanToggle()) }
+            className="category-button"
           >
-            {category.strCategory}
+            {pathname === 'Meals' ? (
+              <img src={ mealIcons[index] } alt={ category.strCategory } />)
+              : (
+                <img src={ drinkIcons[index] } alt={ category.strCategory } />)}
+
           </button>
         ))}
-      </div>
-      <div>
+
         <button
           data-testid="All-category-filter"
           onClick={ () => setFilter([]) }
+          className="category-button"
         >
-          All
+          {pathname === 'Meals'
+            ? <img src={ All } alt="All" />
+            : <img src={ AllDrinks } alt="All" />}
 
         </button>
       </div>
