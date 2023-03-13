@@ -1,5 +1,9 @@
 @media screen and ( max-width : 360px ) {
 
+  /* .containerLogin {
+    background-image: url('../../public/recipes1.jpeg');
+  } */
+
   .loginForm {
     align-items: center;
     bottom: 70px;

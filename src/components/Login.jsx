@@ -27,8 +27,7 @@ function Login() {
   };
 
   return (
-    <div>
-      {/* <Header title="login" /> */}
+    <div className="containerLogin">
       <div>
         <div className="metadeDeCima">
           <img className="loguinho" src="logoRecipesApp.png" alt="loguinho" />
