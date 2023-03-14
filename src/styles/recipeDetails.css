@@ -1,14 +1,18 @@
 .carousel-conteiner {
   display: flex;
+  height: 180px;
   overflow-x: scroll;
 }
 
 .carousel-card {
   border: 0.1px solid #b1b1b1;
+  border-radius: 6px;
+  box-shadow: 3px 1px 14px 2px #b1b1b1;
   margin: 10px;
 }
 
 .carrouselImag {
+  height: 130px;
   width: 150px;
 }
 
@@ -99,6 +103,7 @@
 }
 
 .carName {
+  margin: 0;
   text-align: center;
 }
 
@@ -118,5 +123,21 @@
   padding: 10px;
   text-align: center;
   width: 300px;
+}
 
+.iconCategory {
+  left: 5px;
+  position: absolute;
+  top: 6px;
+  width: 30px;
+}
+
+.containerYouTube {
+  text-align: center;
+}
+
+.containerYouTube > iframe {
+  box-shadow: 3px 1px 14px 2px #b1b1b1;
+  height: 200px;
+  width: 360px;
 }

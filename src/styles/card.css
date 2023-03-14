@@ -1,29 +1,28 @@
-@media screen and ( max-width : 360px ) {
+.linkRecipeCard {
+  border: 0.5px solid #b1b1b1;
+  border-radius: 5%;
+  box-shadow: 0 2px 15px 1px rgb(0 0 0 / 20%);
+  color: black;
+  height: 166px;
+  margin: 5px;
+  margin-bottom: 15px;
+  text-decoration: none;
+  width: 160px;
+}
 
-  .linkRecipeCard {
-    border: 0.5px solid #b1b1b1;
-    border-radius: 5%;
-    box-shadow: 0 2px 15px 1px rgb(0 0 0 / 20%);
-    color: black;
-    height: 166px;
-    margin: 5px;
-    margin-bottom: 15px;
-    text-decoration: none;
-    width: 160px;
-  }
+.recipe-card-img {
+  border-radius: 5% 5% 0 0;
+  height: 130px;
+  width: 160px;
+}
 
-  .recipe-card-img {
-    border-radius: 5% 5% 0 0;
-    height: 130px;
-    width: 160px;
-  }
-
-  .recipe-card-name {
-    font-size: 1.2rem;
-    margin: 5px;
-    text-align: center;
-    text-decoration: none;
-  }
-
+.recipe-card-name {
+  font-size: 16px;
+  margin: 5px;
+  overflow: hidden;
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 

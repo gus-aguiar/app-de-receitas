@@ -4,6 +4,7 @@ import context from '../context/myContext';
 import shareIcon from '../images/Share.svg';
 import blackHeartIcon from '../images/blackHeartIcon.png';
 import whiteHeartIcon from '../images/whiteHeartItem.png';
+import { categoryIcons } from '../utils/categoryDate';
 import '../styles/RecipeInProgress.css';
 
 function RecipeInProgress() {
@@ -143,12 +144,19 @@ function RecipeInProgress() {
               backgroundImage: `url(${item.strMealThumb || item.strDrinkThumb})`,
             }) }
           >
-            <ul className="title" data-testid="recipe-title">
-              { item.strMeal || item.strDrink }
-            </ul>
-            <ul data-testid="recipe-category">
-              <p className="itemCategory">{ item.strCategory }</p>
-            </ul>
+            <div className="headerOfIcons">
+              <ul className="title" data-testid="recipe-title">
+                { item.strMeal || item.strDrink }
+              </ul>
+              <ul data-testid="recipe-category">
+                <img
+                  className="iconCategory"
+                  src={ categoryIcons[item.strCategory] }
+                  alt={ item.strCategory }
+                />
+                <p className="itemCategory">{ item.strCategory }</p>
+              </ul>
+            </div>
           </div>
           <h1 className="ingredientTitle">INGREDIENTS</h1>
           <ul className="ingredientsListProgress" id="container-of-ingredient">
@@ -172,10 +180,8 @@ function RecipeInProgress() {
                       type="checkbox"
                       style={ { margin: '10px' } }
                     />
-                    <p
-                      data-testid={ `${number}-ingredient-name-and-measure` }
-                    >
-                      { `${ingredientName} - ${measure}` }
+                    <p data-testid={ `${number}-ingredient-name-and-measure` }>
+                      { ` ${ingredientName} - ${measure}` }
                     </p>
                   </label>
                 </div>
@@ -196,10 +202,7 @@ function RecipeInProgress() {
         label="share"
         className="shareBtn"
       >
-        <img
-          src={ shareIcon }
-          alt="Share"
-        />
+        <img src={ shareIcon } alt="Share" />
       </button>
       {isFavorite ? (
         <button
@@ -210,10 +213,7 @@ function RecipeInProgress() {
           className="favoriteBtn"
           onClick={ () => handleHeart(id, false) }
         >
-          <img
-            src={ blackHeartIcon }
-            alt="Favorito"
-          />
+          <img src={ blackHeartIcon } alt="Favorito" />
         </button>
       ) : (
         <button
@@ -224,10 +224,7 @@ function RecipeInProgress() {
           className="favoriteBtn"
           onClick={ () => handleHeart(id, true) }
         >
-          <img
-            src={ whiteHeartIcon }
-            alt="Favorito"
-          />
+          <img src={ whiteHeartIcon } alt="Favorito" />
         </button>
       )}
       <div style={ { textAlign: 'center' } }>

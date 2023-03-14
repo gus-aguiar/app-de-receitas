@@ -1,72 +1,74 @@
-@media screen and ( max-width : 360px ) {
-
-  /* .containerLogin {
+/* .containerLogin {
     background-image: url('../../public/recipes1.jpeg');
   } */
 
-  .loginForm {
-    align-items: center;
-    bottom: 70px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: absolute;
-    width: 100%;
-  }
+.loginForm {
+  align-items: center;
+  bottom: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+}
 
-  .login {
-    color: #41197f;
-    font-size: 25px;
-    font-style: italic;
-    font-weight: 300;
-    text-align: center;
-    width: 100%;
-  }
+.login {
+  color: #41197f;
+  font-size: 25px;
+  font-style: italic;
+  font-weight: 300;
+  text-align: center;
+  width: 100%;
+}
 
-  .loginInput {
-    border: 0.5px solid #ccc;
-    border-color: #41197f;
-    border-radius: 6px;
-    margin: 3px;
-    padding: 10px;
-    width: 70%;
-  }
+.loginInput {
+  border: 0.5px solid #ccc;
+  border-color: #41197f;
+  border-radius: 6px;
+  margin: 3px;
+  padding: 10px;
+  width: 70%;
+}
 
-  .loginInput::placeholder {
-    color: #41197f;
-  }
+.loginInput::placeholder {
+  color: #41197f;
+}
 
-  .loguinho {
-    margin-top: 20%;
-    width: 198px;
-  }
-
-
-  .metadeDeCima {
-    background: #41197f;
-    height: 430px;
-    left: 0;
-    text-align: center;
-    top: 0;
-    width: 360px;
-
-  }
-
-  .loginBtn {
-    background-color: #fcc436;
-    border: none;
-    border-radius: 6px;
-    color: white;
-    cursor: pointer;
-    font-size: 18px;
-    margin: 3px;
-    padding: 10px;
-    width: 76%;
-  }
-
-  .loginBtn:disabled {
-    background-color: #898989;
-  }
+.loguinho {
+  margin-top: 20px;
+  width: 198px;
+}
 
 
+.metadeDeCima {
+  background: #41197f;
+  height: 338px;
+  left: 0;
+  position: relative;
+  text-align: center;
+  top: 0;
+  width: 100%;
+}
+
+.loginBtn {
+  background-color: #fcc436;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  margin: 3px;
+  padding: 10px;
+  width: 76%;
+}
+
+.loginBtn:disabled {
+  background-color: #898989;
+}
+
+.tomatinho {
+  left: 0;
+  position: absolute;
+  top: 148px;
+  width: 350px;
 }

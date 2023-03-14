@@ -118,21 +118,23 @@ function Recipes() {
 
         </button>
       </div>
-      <div className="recipes-container">
-        {filter.length > 0
-          ? (filter.map((recipe, index) => (
-            <RecipeCard
-              key={ recipe.idMeal || recipe.idDrink }
-              recipe={ recipe }
-              index={ index }
-            />)))
-          : (recipes.map((recipe, index) => (
-            <RecipeCard
-              key={ recipe.idMeal || recipe.idDrink }
-              recipe={ recipe }
-              index={ index }
-            />
-          )))}
+      <div className="containerRecipes">
+        <div className="recipes-container">
+          {filter.length > 0
+            ? (filter.map((recipe, index) => (
+              <RecipeCard
+                key={ recipe.idMeal || recipe.idDrink }
+                recipe={ recipe }
+                index={ index }
+              />)))
+            : (recipes.map((recipe, index) => (
+              <RecipeCard
+                key={ recipe.idMeal || recipe.idDrink }
+                recipe={ recipe }
+                index={ index }
+              />
+            )))}
+        </div>
       </div>
       <Footer />
     </>

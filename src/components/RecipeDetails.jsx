@@ -5,6 +5,7 @@ import shareIcon from '../images/Share.svg';
 import blackHeartIcon from '../images/blackHeartIcon.png';
 import whiteHeartIcon from '../images/whiteHeartItem.png';
 import context from '../context/myContext';
+import { categoryIcons } from '../utils/categoryDate';
 
 export default function Details() {
   const [recomendedRecipe, setRecomendedRecipe] = useState();
@@ -25,13 +26,11 @@ export default function Details() {
   const invertedWeb = (token === 'meals') ? 'thecocktaildb' : 'themealdb';
   const magicNumber = 15;
   const max = 6;
-
   function copyUrl() {
     const url = `http://localhost:3000${history.location.pathname}`;
     navigator.clipboard.writeText(url);
     setIsUrlCopied(true);
   }
-
   useEffect(() => {
     let favoriteRecipes;
     if (localStorage.getItem('favoriteRecipes')) {
@@ -45,19 +44,17 @@ export default function Details() {
       });
     }
   }, [recipe, setIsFavorite]);
-
   useEffect(() => {
     fetch(`https://www.${web}.com/api/json/v1/1/lookup.php?i=${id}`)
       .then((response) => response.json())
       .then((data) => setRecipe(data[token]))
       .catch((error) => console.error(error));
-  }, [id, token, web]);
+  }, [id, token, web, setRecipe]);
 
   function getYouTubeEmbedUrl(url) {
     const videoId = url.split('v=')[1];
     return `https://www.youtube.com/embed/${videoId}`;
   }
-
   useEffect(() => {
     if (localStorage.getItem('doneRecipes')) {
       const idRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -68,26 +65,24 @@ export default function Details() {
           }
         });
       }
+      console.log(isDisabled);
     }
     if (localStorage.getItem('inProgressRecipes')) {
       const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
       setInProgressRecipes(progress);
     }
-  }, [recipe]);
-
+  }, [recipe, isDisabled]);
   useEffect(() => {
     fetch(`https://www.${invertedWeb}.com/api/json/v1/1/search.php?s=`)
       .then((response) => response.json())
       .then((data) => setRecomendedRecipe((data.meals
         || data.drinks).slice(0, max)));
   }, [id, token, invertedWeb]);
-
   const verifyStart = () => {
     if (inProgressRecipes[token]) {
       return inProgressRecipes[token].id === id;
     }
   };
-
   return (
     <div>
       {recipe ? (
@@ -102,12 +97,19 @@ export default function Details() {
                   backgroundImage: `url(${item.strMealThumb || item.strDrinkThumb})`,
                 }) }
               >
-                <ul data-testid="recipe-title" className="title">
-                  { item.strMeal || item.strDrink }
-                </ul>
-                <ul data-testid="recipe-category">
-                  <p className="itemCategory">{ item.strCategory }</p>
-                </ul>
+                <div className="headerOfIcons">
+                  <ul data-testid="recipe-title" className="title">
+                    { item.strMeal || item.strDrink }
+                  </ul>
+                  <ul data-testid="recipe-category">
+                    <img
+                      className="iconCategory"
+                      src={ categoryIcons[item.strCategory] }
+                      alt={ item.strCategory }
+                    />
+                    <p className="itemCategory">{ item.strCategory }</p>
+                  </ul>
+                </div>
               </div>
               <div>
                 <h1 className="ingredientTitle">INGREDIENTS</h1>
@@ -133,24 +135,24 @@ export default function Details() {
               <ul data-testid="instructions" className="instructionsList">
                 { item.strInstructions }
               </ul>
-              { item.strYoutube && (
-                <iframe
-                  data-testid="video"
-                  width="360"
-                  height="215"
-                  src={ getYouTubeEmbedUrl(item.strYoutube) }
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer;
-                    autoplay;
-                    clipboard-write;
-                    encrypted-media;
-                    gyroscope;
-                    picture-in-picture;
-                    web-share"
-                  allowFullScreen
-                />
-              ) }
+              <div className="containerYouTube">
+                { item.strYoutube && (
+                  <iframe
+                    data-testid="video"
+                    src={ getYouTubeEmbedUrl(item.strYoutube) }
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                      web-share"
+                    allowFullScreen
+                  />
+                ) }
+              </div>
             </div>
           ))}
         </div>
