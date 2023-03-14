@@ -23,6 +23,12 @@ function RecipeInProgress() {
     setFavoriteRecipes,
   } = useContext(context);
 
+  const verifyProgress = (oldInProgress) => {
+    if (oldInProgress[token]) {
+      return oldInProgress[token].id === id;
+    }
+  };
+
   const handleCheck = (event) => {
     const { target } = event;
     const { checked } = target;
@@ -73,7 +79,6 @@ function RecipeInProgress() {
       } else setDisabled(true);
     }
   }, [isChecked, recipe]);
-
   useEffect(() => {
     let favoriteRecipes;
     if (localStorage.getItem('favoriteRecipes')) {
@@ -87,23 +92,20 @@ function RecipeInProgress() {
       });
     }
   }, [recipe, setIsFavorite]);
-
   useEffect(() => {
     if (localStorage.getItem('favoriteRecipes')) {
       const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
       setFavoriteRecipes(recipes);
     }
   }, []);
-
   useEffect(() => {
     if (localStorage.getItem('inProgressRecipes')) {
       const oldInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      if (oldInProgress[token].id === id) {
+      if (verifyProgress(oldInProgress)) {
         setIsChecked(oldInProgress[token].isChecked);
       }
     }
   }, []);
-
   useEffect(() => {
     if (localStorage.getItem('inProgressRecipes')) {
       const oldInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -125,15 +127,12 @@ function RecipeInProgress() {
       localStorage.setItem('inProgressRecipes', JSON.stringify(object));
     }
   }, [isChecked]);
-
   useEffect(() => {
     fetch(`https://www.${web}.com/api/json/v1/1/lookup.php?i=${id}`)
       .then((response) => response.json())
       .then((data) => setRecipe(data[token]))
       .catch((error) => console.error(error));
   }, []);
-
-  console.log(disabled);
   return (
     <div>
       {recipe && (recipe.map((item, index) => (
@@ -144,18 +143,15 @@ function RecipeInProgress() {
               backgroundImage: `url(${item.strMealThumb || item.strDrinkThumb})`,
             }) }
           >
-            <ul data-testid="recipe-title">
+            <ul className="title" data-testid="recipe-title">
               { item.strMeal || item.strDrink }
             </ul>
             <ul data-testid="recipe-category">
-              <p>{ item.strCategory }</p>
-              { item.strDrink ? <p>{ item.strAlcoholic }</p> : null }
-            </ul>
-            <ul data-testid="instructions">
-              { item.strInstructions }
+              <p className="itemCategory">{ item.strCategory }</p>
             </ul>
           </div>
-          <div id="container-of-ingredient">
+          <h1 className="ingredientTitle">INGREDIENTS</h1>
+          <ul className="ingredientsListProgress" id="container-of-ingredient">
             {item && [...Array(magicNumber)].map((_, number) => {
               const ingredientName = item[`strIngredient${number + 1}`];
               const measure = item[`strMeasure${number + 1}`];
@@ -167,12 +163,14 @@ function RecipeInProgress() {
                   <label
                     className={ isChecked.includes(`${number}`) ? 'riscado' : '' }
                     data-testid={ `${number}-ingredient-step` }
+                    style={ { display: 'flex' } }
                   >
                     <input
                       checked={ isChecked.includes(`${number}`) || false }
                       id={ number }
                       onChange={ handleCheck }
                       type="checkbox"
+                      style={ { margin: '10px' } }
                     />
                     <p
                       data-testid={ `${number}-ingredient-name-and-measure` }
@@ -183,22 +181,25 @@ function RecipeInProgress() {
                 </div>
               );
             })}
-          </div>
+          </ul>
+          <h1 className="ingredientTitle">INSTRUCTIONS</h1>
+          <ul data-testid="instructions" className="instructionsListProgress">
+            { item.strInstructions }
+          </ul>
         </div>
       )))}
-
       <button
         type="button"
         data-testid="share-btn"
         src={ shareIcon }
         onClick={ copyUrl }
         label="share"
+        className="shareBtn"
       >
         <img
           src={ shareIcon }
           alt="Share"
         />
-
       </button>
       {isFavorite ? (
         <button
@@ -206,6 +207,7 @@ function RecipeInProgress() {
           data-testid="favorite-btn"
           src={ blackHeartIcon }
           label="Favorite"
+          className="favoriteBtn"
           onClick={ () => handleHeart(id, false) }
         >
           <img
@@ -219,6 +221,7 @@ function RecipeInProgress() {
           data-testid="favorite-btn"
           src={ whiteHeartIcon }
           label="Favorite"
+          className="favoriteBtn"
           onClick={ () => handleHeart(id, true) }
         >
           <img
@@ -227,15 +230,18 @@ function RecipeInProgress() {
           />
         </button>
       )}
-      <Link to="/done-recipes">
-        <button
-          data-testid="finish-recipe-btn"
-          disabled={ disabled }
-          onClick={ () => handleDoneRecipe() }
-        >
-          Finalizar Receita
-        </button>
-      </Link>
+      <div style={ { textAlign: 'center' } }>
+        <Link to="/done-recipes">
+          <button
+            data-testid="finish-recipe-btn"
+            disabled={ disabled }
+            onClick={ () => handleDoneRecipe() }
+            className="start-recipe-btn"
+          >
+            Finalizar Receita
+          </button>
+        </Link>
+      </div>
       {isUrlCopied && <p>Link copied!</p>}
     </div>
   );

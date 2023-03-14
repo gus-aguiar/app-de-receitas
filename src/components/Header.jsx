@@ -8,6 +8,9 @@ import '../styles/Header.css';
 import cloche from '../images/cloche.svg';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
+import profileGold from '../images/profileGold.svg';
+import favoriteIcon from '../images/favoriteIcon.svg';
+import doneIcon from '../images/doneIcon.svg';
 
 function Header({ title }) {
   const [disable, setDisable] = useState(true);
@@ -16,6 +19,13 @@ function Header({ title }) {
   };
 
   const verifySearch = ['Profile', 'Done Recipes', 'Favorite Recipes'];
+  const generationIcon = {
+    FAVORITE: favoriteIcon,
+    PROFILE: profileGold,
+    MEALS: mealIcon,
+    DRINKS: drinkIcon,
+    'DONE RECIPES': doneIcon,
+  };
   return (
     <header className="headerComponent">
       <div className="containerIcons">
@@ -47,16 +57,7 @@ function Header({ title }) {
           </Link>
         </div>
       </div>
-
-      {
-        title === 'Meals' ? (
-          <img src={ mealIcon } alt="Comidas" className="iconMeals" />
-        )
-          : (
-            <img src={ drinkIcon } alt="bebidas" className="iconDrinks" />
-
-          )
-      }
+      <img src={ generationIcon[title] } alt={ title } className="iconMeals" />
       <h1 data-testid="page-title" className="headerTitle">{title}</h1>
       {
         !disable && (

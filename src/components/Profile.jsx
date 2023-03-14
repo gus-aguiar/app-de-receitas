@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Footer from './Footer';
 import Header from './Header';
+import profileDone from '../images/profileDone.svg';
+import profileFavorite from '../images/profileFavorite.svg';
+import profileLogout from '../images/profileLogout.svg';
+import '../styles/profile.css';
 
 function Profile() {
   const [email, setEmail] = useState('');
@@ -29,26 +33,26 @@ function Profile() {
 
   return (
     <>
-      <Header title="Profile" />
-      <div>
+      <Header title="PROFILE" />
+      <div className="containerProfile">
         <h2 data-testid="profile-email">{email}</h2>
         <button
           data-testid="profile-done-btn"
           onClick={ handleClickDone }
         >
-          Done Recipes
+          <img src={ profileDone } alt="done" />
         </button>
         <button
           data-testid="profile-favorite-btn"
           onClick={ handleClickFavorite }
         >
-          Favorite Recipes
+          <img src={ profileFavorite } alt="favorite" />
         </button>
         <button
           data-testid="profile-logout-btn"
           onClick={ handleClickLogout }
         >
-          Logout
+          <img src={ profileLogout } alt="Logout" />
         </button>
       </div>
       <Footer />

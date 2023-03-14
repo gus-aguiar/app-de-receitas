@@ -1,0 +1,16 @@
+.containerProfile {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.containerProfile button {
+  background: transparent;
+  border: 0.5px solid #b1b1b1;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  font-size: 25px;
+  height: 100px;
+  width: 90%;
+}

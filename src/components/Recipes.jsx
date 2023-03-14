@@ -88,7 +88,7 @@ function Recipes() {
 
   return (
     <>
-      <Header title={ pathname } />
+      <Header title={ pathname === 'Meals' ? 'MEALS' : 'DRINKS' } />
       <div className="categories-container">
         {categories.map((category, index) => (
           <button

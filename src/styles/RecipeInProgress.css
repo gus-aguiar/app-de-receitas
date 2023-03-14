@@ -60,28 +60,27 @@
 
 }
 
-.ingredientsList {
+.ingredientsListProgress {
   border: 0.5px solid #b1b1b1;
-  font-size: 20px;
+  font-size: 16px;
   margin: auto;
   padding: 30px;
   width: 70%;
 }
 
-.ingredientsList li {
-  list-style: none;
-  margin: 10px;
+.ingredientsListProgress p {
+  margin: 5px;
 }
 
-.ingredientTitle {
+.ingredientTitleProgress {
   font-size: 20px;
   text-align: center;
 
 }
 
-.instructionsList {
+.instructionsListProgress {
   border: 0.5px solid #b1b1b1;
-  font-size: 20px;
+  font-size: 16px;
   margin: auto;
   margin-bottom: 20px;
   padding: 30px;
@@ -91,12 +90,6 @@
 .carName {
   text-align: center;
 }
-
-/* .link {
-  background-color: aqua;
-  height: 25px;
-  width: 360px;
-} */
 
 .start-recipe-btn {
   background-color: #fcc436;
@@ -108,6 +101,9 @@
   padding: 10px;
   text-align: center;
   width: 300px;
+}
 
+.start-recipe-btn:disabled {
+  background-color: #898989;
 }
 

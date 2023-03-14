@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import '../styles/recipeDetails.css';
 import shareIcon from '../images/Share.svg';
 import blackHeartIcon from '../images/blackHeartIcon.png';
@@ -11,7 +11,7 @@ export default function Details() {
   const { pathname } = useLocation();
   const [token, id] = pathname.slice(1).split('/');
   const [isDisabled, setIsDisabled] = useState(false);
-  const [inProgressRecipes, setInProgressRecipes] = useState(undefined);
+  const [inProgressRecipes, setInProgressRecipes] = useState({});
   const history = useHistory();
   const [isUrlCopied, setIsUrlCopied] = useState(false);
   const {
@@ -70,7 +70,7 @@ export default function Details() {
       }
     }
     if (localStorage.getItem('inProgressRecipes')) {
-      const progress = localStorage.getItem('inProgressRecipes');
+      const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
       setInProgressRecipes(progress);
     }
   }, [recipe]);
@@ -81,6 +81,12 @@ export default function Details() {
       .then((data) => setRecomendedRecipe((data.meals
         || data.drinks).slice(0, max)));
   }, [id, token, invertedWeb]);
+
+  const verifyStart = () => {
+    if (inProgressRecipes[token]) {
+      return inProgressRecipes[token].id === id;
+    }
+  };
 
   return (
     <div>
@@ -130,8 +136,8 @@ export default function Details() {
               { item.strYoutube && (
                 <iframe
                   data-testid="video"
-                  width="560"
-                  height="315"
+                  width="360"
+                  height="215"
                   src={ getYouTubeEmbedUrl(item.strYoutube) }
                   title="YouTube video player"
                   frameBorder="0"
@@ -160,10 +166,9 @@ export default function Details() {
               className="carousel-card"
             >
               <img
-                className="d-block w-100"
+                className="carrouselImag"
                 src={ item.strMealThumb || item.strDrinkThumb }
                 alt={ `${item.strMeal || item.strDrink}` }
-                width="150px"
               />
               <p data-testid={ `${index}-recommendation-title` } className="carName">
                 { item.strDrink }
@@ -198,10 +203,7 @@ export default function Details() {
             onClick={ () => handleHeart(id, false) }
             className="favoriteBtn"
           >
-            <img
-              src={ blackHeartIcon }
-              alt="Favorito"
-            />
+            <img src={ blackHeartIcon } alt="Favorito" />
           </button>
         ) : (
           <button
@@ -212,34 +214,30 @@ export default function Details() {
             onClick={ () => handleHeart(id, true) }
             className="favoriteBtn"
           >
-            <img
-              src={ whiteHeartIcon }
-              alt="Favorito"
-            />
+            <img src={ whiteHeartIcon } alt="Favorito" />
           </button>
         )}
       </div>
       <div style={ { textAlign: 'center' } }>
-        {inProgressRecipes
+        {verifyStart()
           ? (
             <button
               data-testid="start-recipe-btn"
               className="start-recipe-btn"
-              disabled={ isDisabled }
+              onClick={ () => history.push(`${history.location.pathname}/in-progress`) }
             >
               Continue Recipe
             </button>
           )
           : (
-            <Link to={ `${history.location.pathname}/in-progress` } className="link">
-              <button
-                data-testid="start-recipe-btn"
-                className="start-recipe-btn"
-                disabled={ isDisabled }
-              >
-                Start Recipe
-              </button>
-            </Link>
+            <button
+              data-testid="start-recipe-btn"
+              className="start-recipe-btn"
+              onClick={ () => history.push(`${history.location.pathname}/in-progress`) }
+              // disabled={ isDisabled }
+            >
+              Start Recipe
+            </button>
           )}
       </div>
       {isUrlCopied && <p>Link copied!</p>}

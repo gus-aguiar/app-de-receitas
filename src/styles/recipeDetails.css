@@ -1,18 +1,15 @@
 .carousel-conteiner {
   display: flex;
-  flex-flow: row nowrap;
-  height: 200px;
   overflow-x: scroll;
-  width: 350px;
 }
 
 .carousel-card {
-  border: 0.5px solid #b1b1b1;
-  height: 100px;
+  border: 0.1px solid #b1b1b1;
   margin: 10px;
-  width: 240px;
+}
 
-  /* overflow: hidden; */
+.carrouselImag {
+  width: 150px;
 }
 
 .drinksContainer {
