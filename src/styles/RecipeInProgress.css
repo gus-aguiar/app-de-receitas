@@ -17,10 +17,6 @@
   color: white;
   font-size: 30px;
   font-weight: 800;
-  left: 110px;
-  position: absolute;
-  top: 40px;
-
 }
 
 .shareBtn {
@@ -108,6 +104,9 @@
 }
 
 .headerOfIcons {
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.288);
+  display: flex;
+  justify-content: center;
   width: 100%;
 }
