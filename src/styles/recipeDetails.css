@@ -1,6 +1,6 @@
 .carousel-conteiner {
   display: flex;
-  height: 180px;
+  height: 190px;
   overflow-x: scroll;
 }
 
@@ -25,7 +25,6 @@
   justify-content: center;
   margin: auto;
 }
-
 
 .title {
   color: white;
@@ -99,6 +98,7 @@
 }
 
 .carName {
+  font-size: 16px;
   margin: 0;
   text-align: center;
 }
