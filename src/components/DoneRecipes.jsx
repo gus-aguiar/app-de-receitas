@@ -6,6 +6,7 @@ import AllFavorite from '../images/AllFavorite.svg';
 import foodsFavorite from '../images/foodsFavorite.svg';
 import drinksFavorite from '../images/drinksFavorite.svg';
 import '../styles/doneRecipes.css';
+import doneIcon from '../images/doneIcon.svg';
 
 function DoneRecipes() {
   const [isUrlCopied, setIsUrlCopied] = useState(false);
@@ -113,7 +114,20 @@ function DoneRecipes() {
                 name={ recipe.type }
               />
             </button>
-            {isUrlCopied && <p>Link copied!</p>}
+            {isUrlCopied && (
+              <div className="containerAlert">
+                <div className="messageDone">
+                  <img src={ doneIcon } alt="icon de done" />
+                  <p>Link copied!</p>
+                  <button
+                    type="button"
+                    onClick={ () => setIsUrlCopied(false) }
+                  >
+                    Continuar
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )
           : (
@@ -157,8 +171,20 @@ function DoneRecipes() {
                   name={ recipe.type }
                 />
               </button>
-              {isUrlCopied && <p>Link copied!</p>}
-
+              {isUrlCopied && (
+                <div className="containerAlert">
+                  <div className="messageDone">
+                    <img src={ doneIcon } alt="icon de done" />
+                    <p>Link copied!</p>
+                    <button
+                      type="button"
+                      onClick={ () => setIsUrlCopied(false) }
+                    >
+                      Continuar
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>)
 
       ))}

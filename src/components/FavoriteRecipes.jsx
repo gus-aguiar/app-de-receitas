@@ -8,6 +8,7 @@ import '../styles/favoriteRecipes.css';
 import AllFavorite from '../images/AllFavorite.svg';
 import foodsFavorite from '../images/foodsFavorite.svg';
 import drinksFavorite from '../images/drinksFavorite.svg';
+import doneIcon from '../images/doneIcon.svg';
 
 function FavoriteRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useState(undefined);
@@ -144,7 +145,20 @@ function FavoriteRecipes() {
                 </button>
               </div>
             </div>
-            {alert && (<p>Link copied!</p>)}
+            {alert && (
+              <div className="containerAlert">
+                <div className="messageDone">
+                  <img src={ doneIcon } alt="icon de done" />
+                  <p>Link copied!</p>
+                  <button
+                    type="button"
+                    onClick={ () => setAlert(false) }
+                  >
+                    Continuar
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )
           : (
@@ -205,7 +219,20 @@ function FavoriteRecipes() {
                   </button>
                 </div>
               </div>
-              {alert && (<p>Link copied!</p>)}
+              {alert && (
+                <div className="containerAlert">
+                  <div className="messageDone">
+                    <img src={ doneIcon } alt="icon de done" />
+                    <p>Link copied!</p>
+                    <button
+                      type="button"
+                      onClick={ () => setAlert(false) }
+                    >
+                      Continuar
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>)
       ))}
       <Footer />

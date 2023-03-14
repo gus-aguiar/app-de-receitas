@@ -6,6 +6,7 @@ import blackHeartIcon from '../images/blackHeartIcon.png';
 import whiteHeartIcon from '../images/whiteHeartItem.png';
 import context from '../context/myContext';
 import { categoryIcons } from '../utils/categoryDate';
+import doneIcon from '../images/doneIcon.svg';
 
 export default function Details() {
   const [recomendedRecipe, setRecomendedRecipe] = useState();
@@ -242,7 +243,20 @@ export default function Details() {
             </button>
           )}
       </div>
-      {isUrlCopied && <p>Link copied!</p>}
+      {isUrlCopied && (
+        <div className="containerAlert">
+          <div className="messageDone">
+            <img src={ doneIcon } alt="icon de done" />
+            <p>Link copied!</p>
+            <button
+              type="button"
+              onClick={ () => setIsUrlCopied(false) }
+            >
+              Continuar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
