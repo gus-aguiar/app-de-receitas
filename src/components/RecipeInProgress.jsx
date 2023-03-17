@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import context from '../context/myContext';

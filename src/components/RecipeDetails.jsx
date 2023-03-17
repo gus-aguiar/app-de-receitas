@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import '../styles/recipeDetails.css';
